@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-
+import { useState, useEffect, useRef } from "react";
 /* ─── CSS ─────────────────────────────────────────────────────────────── */
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Tenor+Sans&family=DM+Sans:wght@300;400;500&display=swap');
@@ -1056,8 +1055,6 @@ export default function DhanushPortfolio() {
   const closeModal = () => setModalOpen(false);
 
   const currentList = activeTab === 'classes' ? CLASSES : SHOWS;
-  const sliderW = activeTab === 'classes' ? '50%' : '50%';
-  const sliderX = activeTab === 'classes' ? '0%' : '100%';
 
   return (
     <>
@@ -1067,7 +1064,7 @@ export default function DhanushPortfolio() {
       <div className="grain"/>
 
       {/* CURSOR */}
-      <div className="cursor-dot" style={{transform:`translate(${curPos.x}px,${curPos.y}px)`}} className={`cursor-dot ${hovering?'hovering':''}`}>
+<div className={`cursor-dot ${hovering ? 'hovering' : ''}`} style={{transform:`translate(${curPos.x}px,${curPos.y}px)`}}>
         <div className="inner"/>
       </div>
       <div className={`cursor-ring ${hovering?'hovering':''}`} style={{transform:`translate(${ringPos.x}px,${ringPos.y}px)`}}>
@@ -1338,7 +1335,7 @@ export default function DhanushPortfolio() {
               ))}
             </div>
             <div className="footer-link-group">
-              <div className="footer-link-title">Offerings</div>
+<span key={l} className="footer-link-item" style={{cursor:'default'}}>{l}</span>
               {['Performances','Workshops','Cultural Shows','School Programs','Film BGM'].map(l => (
                 <span key={l} className="footer-link-item" style={{cursor:'default'}}>{l}</span>
               ))}
