@@ -1,5 +1,6 @@
+/* eslint-disable */
 import { useState, useEffect, useRef } from "react";
-/* ─── CSS ─────────────────────────────────────────────────────────────── */
+
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Tenor+Sans&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -32,7 +33,6 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--gold3); }
 
-/* ── CURSOR ─────────────────────────────────────────────────────────── */
 .cursor-dot {
   position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999;
   mix-blend-mode: difference;
@@ -57,7 +57,6 @@ body {
 }
 .cursor-ring.hovering .ring { width: 60px; height: 60px; border-color: var(--gold); }
 
-/* ── NOISE GRAIN ────────────────────────────────────────────────────── */
 .grain {
   position: fixed; inset: -200%; width: 400%; height: 400%;
   pointer-events: none; z-index: 9000; opacity: 0.035;
@@ -71,12 +70,10 @@ body {
   90%{transform:translate(5%,3%)}
 }
 
-/* ── NAV ─────────────────────────────────────────────────────────────── */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 8000;
   display: flex; justify-content: space-between; align-items: center;
   padding: 2rem 5vw;
-  mix-blend-mode: normal;
   transition: background 0.5s, padding 0.4s;
 }
 .nav.scrolled {
@@ -106,7 +103,6 @@ body {
 }
 .nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
 
-/* ── HERO ─────────────────────────────────────────────────────────────── */
 .hero {
   position: relative; height: 100vh; overflow: hidden;
   display: flex; align-items: flex-end;
@@ -147,16 +143,13 @@ body {
   background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.12), transparent);
   animation: glowPulse 4s ease-in-out infinite;
 }
-@keyframes glowPulse {
-  0%,100%{opacity:0.7} 50%{opacity:1.3}
-}
+@keyframes glowPulse { 0%,100%{opacity:0.7} 50%{opacity:1.3} }
 .hero-img-border {
   position: absolute; inset: -1px;
   border: 1px solid rgba(201,168,76,0.25);
   clip-path: polygon(6% 0%, 94% 0%, 100% 6%, 100% 94%, 94% 100%, 6% 100%, 0% 94%, 0% 6%);
 }
 
-/* Particles */
 .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .particle {
   position: absolute; width: 2px; height: 2px; border-radius: 50%;
@@ -170,7 +163,6 @@ body {
   100% { transform: translateY(-20vh) translateX(var(--dx,20px)); opacity: 0; }
 }
 
-/* Ripple on scroll */
 .scroll-ripple {
   position: fixed; pointer-events: none; z-index: 7000;
   border-radius: 50%; border: 1px solid rgba(201,168,76,0.4);
@@ -259,7 +251,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── ABOUT ────────────────────────────────────────────────────────────── */
 .about {
   padding: 14vh 5vw;
   position: relative; overflow: hidden;
@@ -294,9 +285,7 @@ body {
   letter-spacing: 4px; text-transform: uppercase;
   color: var(--gold3); margin-bottom: 1rem;
 }
-.about-names {
-  display: flex; flex-direction: column; gap: 0.6rem;
-}
+.about-names { display: flex; flex-direction: column; gap: 0.6rem; }
 .about-name {
   font-family: var(--font-display); font-size: 1.1rem; font-weight: 400;
   color: var(--cream); display: flex; align-items: center; gap: 0.8rem;
@@ -312,7 +301,6 @@ body {
 }
 .about-badge:hover { border-color: var(--gold); color: var(--gold); }
 
-/* ── PROJECTS ─────────────────────────────────────────────────────────── */
 .projects { padding: 14vh 0; background: var(--bg); position: relative; }
 .projects-header { padding: 0 5vw; margin-bottom: 5rem; }
 .section-label {
@@ -365,13 +353,11 @@ body {
   color: var(--muted); display: flex; align-items: center; gap: 0.4rem;
 }
 
-/* ── EXPERIENCE & AWARDS ──────────────────────────────────────────────── */
 .exp-awards { padding: 14vh 5vw; background: var(--bg3); }
 .exp-awards-inner {
   max-width: 1200px; margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr; gap: 6vw;
 }
-.exp-side, .awards-side { }
 .big-stat {
   font-family: var(--font-display); font-size: clamp(5rem, 10vw, 9rem);
   font-weight: 300; color: transparent;
@@ -407,7 +393,6 @@ body {
 }
 .award-org { font-family: var(--font-body); font-size: 0.78rem; color: var(--muted); }
 
-/* ── CLASSES / SHOWS TOGGLE ───────────────────────────────────────────── */
 .services-sec { padding: 14vh 5vw; background: var(--bg); position: relative; overflow: hidden; }
 .services-sec::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
@@ -434,7 +419,7 @@ body {
 .service-cell {
   background: var(--bg); padding: 2rem 1.5rem;
   position: relative; overflow: hidden;
-  cursor: none; transition: background 0.4s;
+  cursor: none;
   opacity: 0; transform: translateY(20px);
   transition: opacity 0.4s, transform 0.4s, background 0.3s;
   min-height: 180px; display: flex; flex-direction: column; justify-content: flex-end;
@@ -461,12 +446,10 @@ body {
 }
 .service-cell:hover .service-cell-line { width: 30px; }
 
-/* ── MEDIA ────────────────────────────────────────────────────────────── */
 .media-sec { padding: 14vh 5vw; background: var(--bg2); }
 .media-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
   gap: 1rem; margin-top: 3rem;
 }
 .media-item {
@@ -474,16 +457,14 @@ body {
   background: var(--bg3);
   transition: transform 0.5s cubic-bezier(0.16,1,.3,1);
 }
-.media-item:nth-child(1) { grid-column: 1/3; grid-row: 1/2; }
-.media-item:nth-child(4) { grid-column: 2/4; grid-row: 2/3; }
-.media-item:nth-child(7) { grid-column: 1/2; grid-row: 3/4; }
+.media-item:nth-child(1) { grid-column: 1/3; }
+.media-item:nth-child(4) { grid-column: 2/4; }
 .media-inner {
   width: 100%; aspect-ratio: 16/9;
   position: relative; overflow: hidden;
 }
 .media-item:nth-child(1) .media-inner,
 .media-item:nth-child(4) .media-inner { aspect-ratio: 21/9; }
-.media-item:nth-child(7) .media-inner { aspect-ratio: 4/3; }
 .media-item:hover { transform: scale(0.985); }
 .media-item:hover .media-hover-overlay { opacity: 1; }
 .media-inner svg { width: 100%; height: 100%; display: block; }
@@ -508,7 +489,6 @@ body {
   border-top: 1px solid var(--line);
 }
 
-/* ── BOOKING ──────────────────────────────────────────────────────────── */
 .booking-sec { padding: 14vh 5vw; background: var(--bg3); }
 .booking-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; align-items: start; }
 .booking-info-num {
@@ -524,9 +504,7 @@ body {
   display: flex; align-items: center; gap: 1rem;
   font-family: var(--font-body); font-size: 0.83rem; color: var(--muted);
 }
-.contact-row span.icon {
-  color: var(--gold); font-size: 0.9rem; width: 20px; text-align: center;
-}
+.contact-row span.icon { color: var(--gold); font-size: 0.9rem; width: 20px; text-align: center; }
 .booking-form { display: flex; flex-direction: column; gap: 0; }
 .field-wrap {
   position: relative; border-bottom: 1px solid var(--line);
@@ -574,7 +552,6 @@ body {
 .submit-btn:hover::after { width: 400px; height: 400px; }
 .submit-btn:hover { background: var(--gold2); }
 
-/* ── FOOTER ───────────────────────────────────────────────────────────── */
 .footer { padding: 8vh 5vw 4vh; background: var(--bg); border-top: 1px solid var(--line); }
 .footer-top {
   display: flex; justify-content: space-between; align-items: flex-start;
@@ -595,7 +572,7 @@ body {
 .footer-link-item {
   font-family: var(--font-body); font-size: 0.82rem;
   color: var(--muted); text-decoration: none; transition: color 0.3s;
-  cursor: none;
+  cursor: pointer;
 }
 .footer-link-item:hover { color: var(--gold); }
 .footer-bottom {
@@ -617,7 +594,6 @@ body {
   0%,100%{height:4px;opacity:0.4} 50%{height:14px;opacity:0.9}
 }
 
-/* ── ANIMATIONS & SCROLL ─────────────────────────────────────────────── */
 .reveal {
   opacity: 0; transform: translateY(40px);
   transition: opacity 0.9s cubic-bezier(0.16,1,.3,1), transform 0.9s cubic-bezier(0.16,1,.3,1);
@@ -633,7 +609,6 @@ body {
 }
 .reveal-left.vis, .reveal-right.vis { opacity: 1; transform: translateX(0); }
 
-/* ── MODAL ───────────────────────────────────────────────────────────── */
 .modal-bg {
   position: fixed; inset: 0; z-index: 9999;
   background: rgba(12,9,5,0.95); backdrop-filter: blur(20px);
@@ -669,7 +644,6 @@ body {
 .success-title { font-family: var(--font-display); font-size: 1.8rem; color: var(--gold2); margin-bottom: 0.5rem; }
 .success-desc { font-family: var(--font-body); font-size: 0.85rem; color: var(--muted); }
 
-/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
 @media(max-width:1024px) {
   .services-grid { grid-template-columns: repeat(3,1fr); }
   .about-inner { grid-template-columns:1fr; }
@@ -678,7 +652,6 @@ body {
   .media-grid { grid-template-columns: 1fr 1fr; }
   .media-item:nth-child(1) { grid-column:1/3; }
   .media-item:nth-child(4) { grid-column:1/3; }
-  .media-item:nth-child(7) { grid-column:auto; }
 }
 @media(max-width:768px) {
   .nav-links { display:none; }
@@ -697,7 +670,6 @@ body {
 }
 `;
 
-/* ─── DATA ─────────────────────────────────────────────────────────── */
 const PROJECTS = [
   {name:"Anandha Kondattam",loc:"Singapore",tag:"International",bg:"#1A1208",accent:"#C9A84C"},
   {name:"Chennai Sangamam",loc:"Chennai",tag:"City Festival",bg:"#120A08",accent:"#D4701A"},
@@ -760,7 +732,6 @@ const MEDIA_ITEMS = [
   {label:"Vijay TV — Super Singer",accent:"#C9A84C",emoji:"📺"},
 ];
 
-/* ─── HERO ILLUSTRATION SVG ────────────────────────────────────────── */
 const HeroIllustration = () => (
   <svg viewBox="0 0 520 680" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%'}}>
     <defs>
@@ -780,129 +751,67 @@ const HeroIllustration = () => (
         <stop offset="0%" stopColor="#6B2800"/>
         <stop offset="100%" stopColor="#2A0E00"/>
       </linearGradient>
-      <filter id="glow2"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     </defs>
-
-    {/* Background ambience */}
     <ellipse cx="260" cy="340" rx="200" ry="280" fill="url(#bgGlow)"/>
-
-    {/* Gold circle rings behind figure */}
     {[80,110,140].map((r,i) => (
-      <circle key={i} cx="260" cy="220" r={r} fill="none"
-        stroke="#C9A84C" strokeWidth="0.5" opacity={0.15 - i*0.04}
-        strokeDasharray={`${8+i*4} ${12+i*4}`}/>
+      <circle key={i} cx="260" cy="220" r={r} fill="none" stroke="#C9A84C" strokeWidth="0.5" opacity={0.15-i*0.04} strokeDasharray={`${8+i*4} ${12+i*4}`}/>
     ))}
-
-    {/* Body shadow */}
     <ellipse cx="260" cy="640" rx="100" ry="20" fill="rgba(201,168,76,0.06)"/>
-
-    {/* Legs */}
     <rect x="215" y="520" width="40" height="110" rx="20" fill="#1A0805"/>
     <rect x="265" y="520" width="40" height="110" rx="20" fill="#1A0805"/>
     <rect x="205" y="620" width="60" height="25" rx="8" fill="#2A1008"/>
     <rect x="255" y="620" width="60" height="25" rx="8" fill="#2A1008"/>
-
-    {/* Body */}
     <ellipse cx="260" cy="440" rx="90" ry="120" fill="url(#clothGrad)"/>
-    {/* Dhoti pattern */}
     <path d="M200 480 Q260 500 320 480 L320 540 Q260 560 200 540 Z" fill="rgba(201,168,76,0.12)"/>
-    {/* Gold border on clothes */}
     <path d="M180 400 Q260 380 340 400" fill="none" stroke="#C9A84C" strokeWidth="2.5" opacity="0.6"/>
-    <path d="M180 410 Q260 390 340 410" fill="none" stroke="#C9A84C" strokeWidth="0.8" opacity="0.3"/>
-    {/* Center design */}
     <line x1="255" y1="380" x2="255" y2="480" stroke="#C9A84C" strokeWidth="2" opacity="0.5"/>
-    <line x1="265" y1="380" x2="265" y2="480" stroke="#C9A84C" strokeWidth="0.8" opacity="0.25"/>
-
-    {/* Arms */}
     <path d="M190 390 Q140 420 110 470" stroke="url(#bodyGrad)" strokeWidth="36" strokeLinecap="round" fill="none"/>
     <path d="M330 390 Q380 420 410 470" stroke="url(#bodyGrad)" strokeWidth="36" strokeLinecap="round" fill="none"/>
-
-    {/* Drum (Parai) */}
     <ellipse cx="260" cy="530" rx="120" ry="35" fill="url(#drumGrad)"/>
     <rect x="140" y="490" width="240" height="75" rx="12" fill="url(#drumGrad)"/>
     <ellipse cx="260" cy="490" rx="120" ry="30" fill="#5C2200"/>
     <ellipse cx="260" cy="487" rx="108" ry="25" fill="#F0E2C4" opacity="0.92"/>
     {[0.95,0.75,0.5].map((r,i) => (
-      <ellipse key={i} cx="260" cy="487" rx={108-i*28} ry={25-i*7}
-        fill="none" stroke="#C9A84C" strokeWidth="1.2" opacity={0.4+i*0.2}/>
+      <ellipse key={i} cx="260" cy="487" rx={108-i*28} ry={25-i*7} fill="none" stroke="#C9A84C" strokeWidth="1.2" opacity={0.4+i*0.2}/>
     ))}
-    {/* Drum patterns */}
-    <path d="M220 487 Q260 470 300 487" fill="none" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
-    <path d="M220 487 Q260 504 300 487" fill="none" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
-
-    {/* Drum sticks */}
     <line x1="110" y1="465" x2="182" y2="478" stroke="#8B4513" strokeWidth="8" strokeLinecap="round"/>
     <ellipse cx="108" cy="468" rx="10" ry="10" fill="#5C2800"/>
     <line x1="410" y1="465" x2="338" y2="478" stroke="#8B4513" strokeWidth="8" strokeLinecap="round"/>
     <ellipse cx="412" cy="468" rx="10" ry="10" fill="#5C2800"/>
-
-    {/* Neck */}
     <rect x="242" y="330" width="36" height="55" rx="18" fill="url(#bodyGrad)"/>
-
-    {/* Head */}
     <ellipse cx="260" cy="300" rx="62" ry="68" fill="url(#bodyGrad)"/>
-
-    {/* Hair */}
     <ellipse cx="260" cy="250" rx="65" ry="35" fill="#150A03"/>
     <path d="M200 268 Q196 310 200 340" stroke="#150A03" strokeWidth="12" fill="none" strokeLinecap="round"/>
     <path d="M320 268 Q324 310 320 340" stroke="#150A03" strokeWidth="12" fill="none" strokeLinecap="round"/>
-
-    {/* Headband */}
     <path d="M200 262 Q260 250 320 262" stroke="#C9A84C" strokeWidth="6" fill="none" strokeLinecap="round"/>
-    <path d="M200 262 Q260 250 320 262" stroke="#8B6820" strokeWidth="2" fill="none" strokeLinecap="round"/>
     {[215,235,260,285,305].map((x,i) => (
-      <circle key={i} cx={x} cy={258 + (i===2?-2:0)} r="3.5" fill="#D4701A"/>
+      <circle key={i} cx={x} cy={258+(i===2?-2:0)} r="3.5" fill="#D4701A"/>
     ))}
-
-    {/* Eyes */}
     <ellipse cx="240" cy="300" rx="7" ry="8" fill="#150A03"/>
     <ellipse cx="280" cy="300" rx="7" ry="8" fill="#150A03"/>
     <ellipse cx="242" cy="298" rx="2.5" ry="3" fill="white"/>
     <ellipse cx="282" cy="298" rx="2.5" ry="3" fill="white"/>
-    {/* Eyebrows */}
     <path d="M232 288 Q240 284 248 288" stroke="#150A03" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
     <path d="M272 288 Q280 284 288 288" stroke="#150A03" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-
-    {/* Smile */}
     <path d="M245 318 Q260 330 275 318" stroke="#6B1A00" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-
-    {/* Bindi / Tilak */}
     <line x1="260" y1="272" x2="260" y2="285" stroke="#FF3300" strokeWidth="3.5" strokeLinecap="round"/>
     <circle cx="260" cy="270" r="3" fill="#FF3300"/>
-
-    {/* Earrings */}
     <circle cx="198" cy="308" r="6" fill="none" stroke="#C9A84C" strokeWidth="2"/>
     <circle cx="198" cy="318" r="3" fill="#C9A84C"/>
     <circle cx="322" cy="308" r="6" fill="none" stroke="#C9A84C" strokeWidth="2"/>
     <circle cx="322" cy="318" r="3" fill="#C9A84C"/>
-
-    {/* Sound wave lines radiating */}
     {[0,1,2].map(i => (
-      <path key={`wl${i}`}
-        d={`M${80-i*18},460 Q${80-i*18},480 ${80-i*18},500`}
-        stroke="#C9A84C" strokeWidth="2" fill="none"
-        opacity={0.6-i*0.18} strokeLinecap="round"/>
+      <path key={`wl${i}`} d={`M${80-i*18},460 Q${80-i*18},480 ${80-i*18},500`} stroke="#C9A84C" strokeWidth="2" fill="none" opacity={0.6-i*0.18} strokeLinecap="round"/>
     ))}
     {[0,1,2].map(i => (
-      <path key={`wr${i}`}
-        d={`M${440+i*18},460 Q${440+i*18},480 ${440+i*18},500`}
-        stroke="#C9A84C" strokeWidth="2" fill="none"
-        opacity={0.6-i*0.18} strokeLinecap="round"/>
+      <path key={`wr${i}`} d={`M${440+i*18},460 Q${440+i*18},480 ${440+i*18},500`} stroke="#C9A84C" strokeWidth="2" fill="none" opacity={0.6-i*0.18} strokeLinecap="round"/>
     ))}
-
-    {/* Floating gold particles */}
     {[[60,180,3],[400,140,2.5],[70,400,2],[440,350,3],[140,80,2],[380,90,2.5],[50,560,2]].map(([x,y,r],i) => (
       <circle key={`p${i}`} cx={x} cy={y} r={r} fill="#C9A84C" opacity={0.3+i*0.05}/>
-    ))}
-
-    {/* Kolam dots at bottom */}
-    {[[-80,20],[-55,0],[-30,15],[0,0],[30,15],[55,0],[80,20]].map(([dx,dy],i) => (
-      <circle key={`k${i}`} cx={260+dx} cy={648+dy} r="2.5" fill="#C9A84C" opacity={0.25+i*0.04}/>
     ))}
   </svg>
 );
 
-/* ─── MEDIA SVG THUMBNAILS ─────────────────────────────────────────── */
 const MediaThumb = ({item, idx}) => {
   const w = 900, h = [300,200,200,300,200,200,300][idx] || 200;
   return (
@@ -913,43 +822,12 @@ const MediaThumb = ({item, idx}) => {
         <stop offset="100%" stopColor="transparent"/>
       </radialGradient>
       <rect width={w} height={h} fill={`url(#mg${idx})`}/>
-      {/* Grid lines */}
-      {[w/4,w/2,3*w/4].map((x,i) => (
-        <line key={i} x1={x} y1={0} x2={x} y2={h} stroke={item.accent} strokeWidth="0.5" opacity="0.06"/>
-      ))}
-      {[h/3,2*h/3].map((y,i) => (
-        <line key={i} x1={0} y1={y} x2={w} y2={y} stroke={item.accent} strokeWidth="0.5" opacity="0.06"/>
-      ))}
       <text x={w/2} y={h/2-10} textAnchor="middle" dominantBaseline="middle" fontSize={h*0.35} opacity="0.2">{item.emoji}</text>
       <text x={w/2} y={h-25} textAnchor="middle" fontSize="12" fill={item.accent} opacity="0.6" fontFamily="Tenor Sans, sans-serif" letterSpacing="2">{item.label.toUpperCase()}</text>
     </svg>
   );
 };
 
-/* ─── PARTICLES ────────────────────────────────────────────────────── */
-const Particles = () => {
-  const particles = Array.from({length:18}, (_,i) => ({
-    id:i, left:`${5+i*5.2}%`,
-    delay:`${Math.random()*8}s`,
-    dur:`${10+Math.random()*12}s`,
-    dx:`${(Math.random()-0.5)*80}px`,
-    size: `${1+Math.random()*2}px`,
-    opacity: 0.2+Math.random()*0.5,
-  }));
-  return (
-    <div className="particles">
-      {particles.map(p => (
-        <div key={p.id} className="particle" style={{
-          left:p.left, width:p.size, height:p.size,
-          animationDuration:p.dur, animationDelay:p.delay,
-          '--dx':p.dx, opacity:p.opacity,
-        }}/>
-      ))}
-    </div>
-  );
-};
-
-/* ─── PROJECT CARD BG ──────────────────────────────────────────────── */
 const ProjectBg = ({p, idx}) => (
   <svg viewBox="0 0 380 480" xmlns="http://www.w3.org/2000/svg" style={{width:'100%',height:'100%',display:'block'}}>
     <defs>
@@ -960,14 +838,11 @@ const ProjectBg = ({p, idx}) => (
     </defs>
     <rect width="380" height="480" fill={p.bg}/>
     <rect width="380" height="480" fill={`url(#pg${idx})`}/>
-    {/* Abstract pattern */}
     <circle cx="300" cy="80" r="120" fill="none" stroke={p.accent} strokeWidth="0.5" opacity="0.15"/>
     <circle cx="300" cy="80" r="80" fill="none" stroke={p.accent} strokeWidth="0.5" opacity="0.2"/>
-    <circle cx="300" cy="80" r="40" fill={p.accent} opacity="0.05"/>
     <text x="190" y="240" textAnchor="middle" dominantBaseline="middle" fontSize="90" opacity="0.12" fill={p.accent}>
       {['🥁','🎭','💃','🌟','🎪','🎶','🏠','📺','🎬'][idx]}
     </text>
-    {/* Corner lines */}
     <line x1="0" y1="0" x2="60" y2="0" stroke={p.accent} strokeWidth="0.5" opacity="0.3"/>
     <line x1="0" y1="0" x2="0" y2="60" stroke={p.accent} strokeWidth="0.5" opacity="0.3"/>
     <line x1="380" y1="480" x2="320" y2="480" stroke={p.accent} strokeWidth="0.5" opacity="0.3"/>
@@ -975,8 +850,29 @@ const ProjectBg = ({p, idx}) => (
   </svg>
 );
 
-/* ─── MAIN COMPONENT ───────────────────────────────────────────────── */
-export default function DhanushPortfolio() {
+const Particles = () => {
+  const particles = Array.from({length:18}, (_,i) => ({
+    id:i, left:`${5+i*5.2}%`,
+    delay:`${Math.random()*8}s`,
+    dur:`${10+Math.random()*12}s`,
+    dx:`${(Math.random()-0.5)*80}px`,
+    size:`${1+Math.random()*2}px`,
+    opacity:0.2+Math.random()*0.5,
+  }));
+  return (
+    <div className="particles">
+      {particles.map((p) => (
+        <div key={p.id} className="particle" style={{
+          left:p.left, width:p.size, height:p.size,
+          animationDuration:p.dur, animationDelay:p.delay,
+          '--dx':p.dx, opacity:p.opacity,
+        }}/>
+      ))}
+    </div>
+  );
+};
+
+export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeTab, setActiveTab] = useState('classes');
   const [modalOpen, setModalOpen] = useState(false);
@@ -990,34 +886,25 @@ export default function DhanushPortfolio() {
   const ringRef = useRef({x:0,y:0});
   const rafRef = useRef(null);
 
-  // Cursor
   useEffect(() => {
-    const move = e => { curRef.current = {x:e.clientX, y:e.clientY}; setCurPos({x:e.clientX,y:e.clientY}); };
-    const hoverIn = () => setHovering(true);
-    const hoverOut = () => setHovering(false);
+    const move = (e) => { curRef.current = {x:e.clientX,y:e.clientY}; setCurPos({x:e.clientX,y:e.clientY}); };
     document.addEventListener('mousemove', move);
-    document.querySelectorAll('button,a,[data-hover]').forEach(el => {
-      el.addEventListener('mouseenter', hoverIn);
-      el.addEventListener('mouseleave', hoverOut);
-    });
     const animate = () => {
       ringRef.current.x += (curRef.current.x - ringRef.current.x) * 0.12;
       ringRef.current.y += (curRef.current.y - ringRef.current.y) * 0.12;
-      setRingPos({...ringRef.current});
+      setRingPos({x:ringRef.current.x, y:ringRef.current.y});
       rafRef.current = requestAnimationFrame(animate);
     };
     rafRef.current = requestAnimationFrame(animate);
     return () => { document.removeEventListener('mousemove', move); cancelAnimationFrame(rafRef.current); };
   }, []);
 
-  // Scroll
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll ripple
   useEffect(() => {
     let lastY = 0, ticking = false;
     const onScroll = () => {
@@ -1041,16 +928,18 @@ export default function DhanushPortfolio() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Intersection observer
   useEffect(() => {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-    }, {threshold: 0.12});
-    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.service-cell').forEach(el => obs.observe(el));
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.service-cell').forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [activeTab]);
 
-  const handleSubmit = e => { e.preventDefault(); setSubmitted(true); };
+  const handleMouseEnter = () => setHovering(true);
+  const handleMouseLeave = () => setHovering(false);
+
+  const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
   const openModal = () => { setModalOpen(true); setSubmitted(false); };
   const closeModal = () => setModalOpen(false);
 
@@ -1059,71 +948,63 @@ export default function DhanushPortfolio() {
   return (
     <>
       <style>{CSS}</style>
-
-      {/* GRAIN */}
       <div className="grain"/>
 
-      {/* CURSOR */}
-<div className={`cursor-dot ${hovering ? 'hovering' : ''}`} style={{transform:`translate(${curPos.x}px,${curPos.y}px)`}}>
+      <div className={`cursor-dot ${hovering ? 'hovering' : ''}`} style={{transform:`translate(${curPos.x}px,${curPos.y}px)`}}>
         <div className="inner"/>
       </div>
-      <div className={`cursor-ring ${hovering?'hovering':''}`} style={{transform:`translate(${ringPos.x}px,${ringPos.y}px)`}}>
+      <div className={`cursor-ring ${hovering ? 'hovering' : ''}`} style={{transform:`translate(${ringPos.x}px,${ringPos.y}px)`}}>
         <div className="ring"/>
       </div>
 
       {/* NAV */}
-      <nav className={`nav ${scrolled?'scrolled':''}`}>
+      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-logo">Dhanush</div>
         <ul className="nav-links">
-          {['About','Projects','Services','Media','Contact'].map(l => (
-            <li key={l}><a href={`#${l.toLowerCase()}`}>{l}</a></li>
+          {['About','Projects','Services','Media','Contact'].map((item) => (
+            <li key={item}><a href={`#${item.toLowerCase()}`}>{item}</a></li>
           ))}
         </ul>
-        <button className="nav-cta" onClick={openModal}>Book Now</button>
+        <button className="nav-cta" onClick={openModal} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          Book Now
+        </button>
       </nav>
 
-      {/* ── HERO ─────────────────────────────────────────────────── */}
+      {/* HERO */}
       <section className="hero" id="home">
         <div className="hero-bg"/>
         <Particles/>
-
         <div className="hero-img-wrap">
           <div className="hero-img-frame">
-            <div className="hero-img-inner">
-              <HeroIllustration/>
-              <div className="hero-img-glow"/>
-            </div>
+            <div className="hero-img-inner"><HeroIllustration/><div className="hero-img-glow"/></div>
             <div className="hero-img-border"/>
           </div>
         </div>
-
         <div className="hero-content">
           <div className="hero-eyebrow">
             <div className="hero-line"/>
             <span className="hero-eyebrow-text">Folk Performance Artist</span>
           </div>
-          <h1 className="hero-name">
-            Dha<em>nush</em>
-          </h1>
+          <h1 className="hero-name">Dha<em>nush</em></h1>
           <p className="hero-role">10+ Years · Rhythm & Culture</p>
-          <blockquote className="hero-tagline">
-            "Not Just Performance —<br/>A Living Tradition"
-          </blockquote>
+          <blockquote className="hero-tagline">"Not Just Performance —<br/>A Living Tradition"</blockquote>
           <div className="hero-btns">
-            <button className="btn-gold" onClick={() => document.getElementById('media').scrollIntoView({behavior:'smooth'})}>
+            <button className="btn-gold" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+              onClick={() => document.getElementById('media').scrollIntoView({behavior:'smooth'})}>
               <span>▶ Watch Performance</span>
             </button>
-            <button className="btn-ghost" onClick={openModal}>Book a Show</button>
+            <button className="btn-ghost" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={openModal}>
+              Book a Show
+            </button>
           </div>
         </div>
-
         <div className="hero-scroll">
           <span className="scroll-text">Scroll</span>
           <div className="scroll-bar"/>
         </div>
       </section>
 
-      {/* ── ABOUT ────────────────────────────────────────────────── */}
+      {/* ABOUT */}
       <section className="about" id="about">
         <div className="about-inner">
           <div>
@@ -1131,7 +1012,7 @@ export default function DhanushPortfolio() {
             <h2 className="about-headline reveal" style={{transitionDelay:'0.1s'}}>
               Rhythm is<br/>not music —<br/><em>it is life</em>
             </h2>
-            <p className="about-body reveal" style={{transitionDelay:'0.2s', marginTop:'0.5rem'}}>
+            <p className="about-body reveal" style={{transitionDelay:'0.2s',marginTop:'0.5rem'}}>
               10+ years of experience in traditional and contemporary folk performance.
               Dhanush brings the ancient heartbeat of Tamil culture to stages across the world,
               preserving art forms that speak beyond language.
@@ -1149,7 +1030,7 @@ export default function DhanushPortfolio() {
             <div className="reveal">
               <div className="about-block-title">Recognised by</div>
               <div className="about-badge-row">
-                {['IIT Madras','Education Minister','Kanimozhi Karunanidhi MP','Nanban Organisation'].map(b => (
+                {['IIT Madras','Education Minister','Kanimozhi Karunanidhi MP','Nanban Organisation'].map((b) => (
                   <span key={b} className="about-badge">{b}</span>
                 ))}
               </div>
@@ -1158,13 +1039,11 @@ export default function DhanushPortfolio() {
         </div>
       </section>
 
-      {/* ── PROJECTS ─────────────────────────────────────────────── */}
+      {/* PROJECTS */}
       <section className="projects" id="projects">
         <div className="projects-header">
           <div className="section-label reveal">Stage Presence</div>
-          <h2 className="section-title reveal" style={{transitionDelay:'0.1s'}}>
-            Featured <em>Performances</em>
-          </h2>
+          <h2 className="section-title reveal" style={{transitionDelay:'0.1s'}}>Featured <em>Performances</em></h2>
         </div>
         <div className="proj-scroll">
           <div className="proj-track">
@@ -1183,10 +1062,10 @@ export default function DhanushPortfolio() {
         </div>
       </section>
 
-      {/* ── EXPERIENCE & AWARDS ───────────────────────────────────── */}
+      {/* EXPERIENCE & AWARDS */}
       <section className="exp-awards" id="experience">
         <div className="exp-awards-inner">
-          <div className="exp-side reveal-left">
+          <div className="reveal-left">
             <div className="section-label" style={{marginBottom:'2rem'}}>Experience</div>
             <div className="big-stat">10+</div>
             <div className="big-stat-label">Years of Craft</div>
@@ -1196,11 +1075,11 @@ export default function DhanushPortfolio() {
               between the ancient and the present.
             </p>
           </div>
-          <div className="awards-side reveal-right" style={{transitionDelay:'0.15s'}}>
+          <div className="reveal-right" style={{transitionDelay:'0.15s'}}>
             <div className="section-label" style={{marginBottom:'2rem'}}>Recognition</div>
             <div className="awards-list">
               {AWARDS.map((a, i) => (
-                <div className="award-item" key={i} style={{transitionDelay:`${i*0.08}s`}}>
+                <div className="award-item" key={i}>
                   <div className="award-icon-wrap">{a.icon}</div>
                   <div>
                     <div className="award-title">{a.title}</div>
@@ -1213,25 +1092,22 @@ export default function DhanushPortfolio() {
         </div>
       </section>
 
-      {/* ── SERVICES (CLASSES / SHOWS) ────────────────────────────── */}
+      {/* SERVICES */}
       <section className="services-sec" id="services">
         <div className="section-label reveal">Repertoire</div>
-        <h2 className="section-title reveal" style={{transitionDelay:'0.1s'}}>
-          Classes & <em>Shows</em>
-        </h2>
-
+        <h2 className="section-title reveal" style={{transitionDelay:'0.1s'}}>Classes & <em>Shows</em></h2>
         <div className="toggle-wrap reveal" style={{transitionDelay:'0.2s'}}>
-          <div className="toggle-slider" style={{width:`calc(50% + 0px)`, transform:`translateX(${activeTab==='classes'?'0%':'100%'})`}}/>
+          <div className="toggle-slider" style={{width:'50%', transform:`translateX(${activeTab==='classes'?'0%':'100%'})`}}/>
           <button className={`toggle-btn ${activeTab==='classes'?'active':''}`}
+            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
             onClick={() => setActiveTab('classes')}>Classes</button>
           <button className={`toggle-btn ${activeTab==='shows'?'active':''}`}
+            onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
             onClick={() => setActiveTab('shows')}>Shows</button>
         </div>
-
         <div className="services-grid">
           {currentList.map((s, i) => (
-            <div className="service-cell" key={`${activeTab}-${i}`}
-              style={{transitionDelay:`${(i%4)*0.07}s`}}>
+            <div className="service-cell" key={`${activeTab}-${i}`} style={{transitionDelay:`${(i%4)*0.07}s`}}>
               <div className="service-cell-num">{String(i+1).padStart(2,'0')}</div>
               <div className="service-cell-icon">{s.icon}</div>
               <div className="service-cell-name">{s.name}</div>
@@ -1242,20 +1118,16 @@ export default function DhanushPortfolio() {
         </div>
       </section>
 
-      {/* ── MEDIA ─────────────────────────────────────────────────── */}
+      {/* MEDIA */}
       <section className="media-sec" id="media">
         <div className="section-label reveal">Visual Archive</div>
-        <h2 className="section-title reveal" style={{transitionDelay:'0.1s'}}>
-          Watch & <em>Feel</em>
-        </h2>
+        <h2 className="section-title reveal" style={{transitionDelay:'0.1s'}}>Watch & <em>Feel</em></h2>
         <div className="media-grid">
           {MEDIA_ITEMS.map((item, i) => (
             <div className="media-item" key={i}>
               <div className="media-inner">
                 <MediaThumb item={item} idx={i}/>
-                <div className="media-hover-overlay">
-                  <div className="media-play">▶</div>
-                </div>
+                <div className="media-hover-overlay"><div className="media-play">▶</div></div>
               </div>
               <div className="media-caption">{item.label}</div>
             </div>
@@ -1263,16 +1135,13 @@ export default function DhanushPortfolio() {
         </div>
       </section>
 
-      {/* ── BOOKING ───────────────────────────────────────────────── */}
+      {/* BOOKING */}
       <section className="booking-sec" id="contact">
         <div className="booking-inner">
           <div className="reveal-left">
             <div className="section-label" style={{marginBottom:'2rem'}}>Get in Touch</div>
             <div className="booking-info-num">Book<br/><em style={{fontStyle:'italic',color:'var(--gold2)'}}>Now</em></div>
-            <p className="booking-info-desc">
-              Available for performances, workshops, cultural shows, and collaborations.
-              Based in Chennai — performing globally.
-            </p>
+            <p className="booking-info-desc">Available for performances, workshops, cultural shows, and collaborations. Based in Chennai — performing globally.</p>
             <div className="booking-info-contact">
               <div className="contact-row"><span className="icon">📍</span> Chennai, Tamil Nadu, India</div>
               <div className="contact-row"><span className="icon">✉️</span> dhanush@folkartist.in</div>
@@ -1280,19 +1149,18 @@ export default function DhanushPortfolio() {
               <div className="contact-row"><span className="icon">📸</span> @dhanush.folkartist</div>
             </div>
           </div>
-
           <div className="reveal-right" style={{transitionDelay:'0.15s'}}>
             <form className="booking-form" onSubmit={handleSubmit}>
               {[
-                {id:'name',label:'Your Name',type:'text',ph:'Full Name'},
-                {id:'email',label:'Email Address',type:'email',ph:'you@mail.com'},
-                {id:'phone',label:'Phone (optional)',type:'tel',ph:'+91 XXXXXXXXXX'},
-              ].map(f => (
+                {id:'name',label:'Your Name',type:'text'},
+                {id:'email',label:'Email Address',type:'email'},
+                {id:'phone',label:'Phone (optional)',type:'tel'},
+              ].map((f) => (
                 <div className={`field-wrap ${form[f.id]?'filled':''}`} key={f.id}>
                   <label className="field-label">{f.label}</label>
                   <input className="field-input" type={f.type}
                     value={form[f.id]}
-                    onChange={e => setForm({...form,[f.id]:e.target.value})}
+                    onChange={(e) => setForm({...form,[f.id]:e.target.value})}
                     required={f.id!=='phone'}/>
                   <div className="field-glow"/>
                 </div>
@@ -1300,9 +1168,9 @@ export default function DhanushPortfolio() {
               <div className={`field-wrap ${form.type?'filled':''}`}>
                 <label className="field-label">Event Type</label>
                 <select className="field-select" value={form.type}
-                  onChange={e => setForm({...form,type:e.target.value})} required>
+                  onChange={(e) => setForm({...form,type:e.target.value})} required>
                   <option value=""/>
-                  {['Stage Performance','Cultural Festival','Workshop','Wedding','Television / Film','School / College Event'].map(o => (
+                  {['Stage Performance','Cultural Festival','Workshop','Wedding','Television / Film','School / College Event'].map((o) => (
                     <option key={o}>{o}</option>
                   ))}
                 </select>
@@ -1310,74 +1178,70 @@ export default function DhanushPortfolio() {
               </div>
               <div className={`field-wrap ${form.msg?'filled':''}`}>
                 <label className="field-label">Message</label>
-                <textarea className="field-textarea"
-                  value={form.msg}
-                  onChange={e => setForm({...form,msg:e.target.value})}/>
+                <textarea className="field-textarea" value={form.msg} onChange={(e) => setForm({...form,msg:e.target.value})}/>
                 <div className="field-glow"/>
               </div>
               <div className="submit-btn-wrap">
-                <button type="submit" className="submit-btn">Send Message</button>
+                <button type="submit" className="submit-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                  Send Message
+                </button>
               </div>
             </form>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ────────────────────────────────────────────────── */}
+      {/* FOOTER */}
       <footer className="footer">
         <div className="footer-top">
           <div className="footer-logo-big">Dha<em>nush</em></div>
           <div className="footer-links">
             <div className="footer-link-group">
               <div className="footer-link-title">Explore</div>
-              {['About','Projects','Services','Media','Contact'].map(l => (
-                <a key={l} href={`#${l.toLowerCase()}`} className="footer-link-item">{l}</a>
+              {['About','Projects','Services','Media','Contact'].map((item) => (
+                <a key={item} href={`#${item.toLowerCase()}`} className="footer-link-item">{item}</a>
               ))}
             </div>
             <div className="footer-link-group">
-<span key={l} className="footer-link-item" style={{cursor:'default'}}>{l}</span>
-              {['Performances','Workshops','Cultural Shows','School Programs','Film BGM'].map(l => (
-                <span key={l} className="footer-link-item" style={{cursor:'default'}}>{l}</span>
+              <div className="footer-link-title">Offerings</div>
+              {['Performances','Workshops','Cultural Shows','School Programs','Film BGM'].map((item) => (
+                <span key={item} className="footer-link-item">{item}</span>
               ))}
             </div>
             <div className="footer-link-group">
               <div className="footer-link-title">Connect</div>
-              {['Instagram','YouTube','Facebook','LinkedIn'].map(l => (
-                <a key={l} href="#" className="footer-link-item">{l}</a>
+              {['Instagram','YouTube','Facebook','LinkedIn'].map((item) => (
+                <span key={item} className="footer-link-item" style={{cursor:'pointer'}}>{item}</span>
               ))}
             </div>
           </div>
         </div>
-
         <div className="footer-bottom">
           <span className="footer-copy">© 2024 Dhanush — Folk Artist. All rights reserved.</span>
           <div className="footer-wave">
             {Array.from({length:12},(_,i) => (
-              <div key={i} className="footer-wave-bar" style={{
-                animationDelay:`${i*0.1}s`,
-                height:`${4+Math.sin(i)*6}px`
-              }}/>
+              <div key={i} className="footer-wave-bar" style={{animationDelay:`${i*0.1}s`, height:`${4+Math.sin(i)*6}px`}}/>
             ))}
           </div>
           <span className="footer-tamil">பறை – ஒரு அடையாளம்</span>
         </div>
       </footer>
 
-      {/* ── MODAL ─────────────────────────────────────────────────── */}
+      {/* MODAL */}
       {modalOpen && (
-        <div className="modal-bg" onClick={e => e.target.className === 'modal-bg' && closeModal()}>
+        <div className="modal-bg" onClick={(e) => { if(e.target.className==='modal-bg') closeModal(); }}>
           <div className="modal-box">
-            <button className="modal-close-btn" onClick={closeModal}>✕</button>
+            <button className="modal-close-btn" onClick={closeModal} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>✕</button>
             {!submitted ? (
               <>
                 <div className="modal-title">Book a Show</div>
                 <div className="modal-sub">Dhanush's team will reach you within 24 hours.</div>
-                <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'0'}}>
+                <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column'}}>
                   {[
                     {id:'mname',label:'Name',type:'text'},
                     {id:'memail',label:'Email',type:'email'},
                     {id:'mphone',label:'Phone',type:'tel'},
-                  ].map(f => (
+                  ].map((f) => (
                     <div className="field-wrap" key={f.id} style={{marginBottom:'0.3rem'}}>
                       <label className="field-label">{f.label}</label>
                       <input className="field-input" type={f.type} required/>
@@ -1388,7 +1252,7 @@ export default function DhanushPortfolio() {
                     <label className="field-label">Event</label>
                     <select className="field-select" required>
                       <option value=""/>
-                      {['Stage Show','Festival','Workshop','Wedding','Other'].map(o => <option key={o}>{o}</option>)}
+                      {['Stage Show','Festival','Workshop','Wedding','Other'].map((o) => <option key={o}>{o}</option>)}
                     </select>
                     <div className="field-glow"/>
                   </div>
@@ -1397,7 +1261,9 @@ export default function DhanushPortfolio() {
                     <textarea className="field-textarea"/>
                     <div className="field-glow"/>
                   </div>
-                  <button type="submit" className="submit-btn">Confirm Booking</button>
+                  <button type="submit" className="submit-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    Confirm Booking
+                  </button>
                 </form>
               </>
             ) : (
@@ -1410,7 +1276,10 @@ export default function DhanushPortfolio() {
                 <div style={{marginTop:'2rem',fontFamily:'var(--font-display)',fontStyle:'italic',color:'var(--gold)',fontSize:'1.1rem'}}>
                   பறை – ஒரு அடையாளம்
                 </div>
-                <button className="btn-ghost" style={{marginTop:'1.5rem',padding:'0.8rem 2rem',cursor:'none'}} onClick={closeModal}>Close</button>
+                <button className="btn-ghost" style={{marginTop:'1.5rem',padding:'0.8rem 2rem',cursor:'none'}}
+                  onClick={closeModal} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                  Close
+                </button>
               </div>
             )}
           </div>
