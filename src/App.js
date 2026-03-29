@@ -1,5 +1,8 @@
 /* eslint-disable */
 import { useState, useEffect, useRef, useCallback } from "react";
+import dhanushImg from "./Assests/dhanush.png";
+
+
 
 // ── ADD YOUR PHOTOS ──────────────────────────────────────────────
 // Hero photo:   replace <HeroIllustration/> with <img src="dhanush.jpg" .../>
@@ -446,58 +449,7 @@ const MEDIA = [
   {emoji:"📺",label:"Super Singer — Vijay TV",              bg:"linear-gradient(135deg,#180E08,#3A2010)"},
 ];
 
-/* ── SVG ILLUSTRATION ── */
-const HeroIllustration = () => (
-  <svg viewBox="0 0 520 680" xmlns="http://www.w3.org/2000/svg" style={{width:"100%",height:"100%"}}>
-    <defs>
-      <radialGradient id="bG" cx="50%" cy="30%" r="70%"><stop offset="0%" stopColor="#D4845A"/><stop offset="100%" stopColor="#8B4A28"/></radialGradient>
-      <linearGradient id="cG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4A1A08"/><stop offset="100%" stopColor="#1A0805"/></linearGradient>
-      <linearGradient id="dG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#6B2800"/><stop offset="100%" stopColor="#2A0E00"/></linearGradient>
-    </defs>
-    <ellipse cx="260" cy="340" rx="200" ry="280" fill="rgba(201,168,76,0.05)"/>
-    {[80,110,140].map((r,i)=><circle key={i} cx="260" cy="220" r={r} fill="none" stroke="#C9A84C" strokeWidth="0.5" opacity={0.15-i*0.04} strokeDasharray={`${8+i*4} ${12+i*4}`}/>)}
-    <ellipse cx="260" cy="640" rx="100" ry="20" fill="rgba(201,168,76,0.06)"/>
-    <rect x="215" y="520" width="40" height="110" rx="20" fill="#1A0805"/>
-    <rect x="265" y="520" width="40" height="110" rx="20" fill="#1A0805"/>
-    <rect x="205" y="620" width="60" height="25" rx="8" fill="#2A1008"/>
-    <rect x="255" y="620" width="60" height="25" rx="8" fill="#2A1008"/>
-    <ellipse cx="260" cy="440" rx="90" ry="120" fill="url(#cG)"/>
-    <path d="M200 480 Q260 500 320 480 L320 540 Q260 560 200 540 Z" fill="rgba(201,168,76,0.1)"/>
-    <path d="M180 400 Q260 380 340 400" fill="none" stroke="#C9A84C" strokeWidth="2.5" opacity="0.55"/>
-    <line x1="255" y1="380" x2="255" y2="480" stroke="#C9A84C" strokeWidth="2" opacity="0.45"/>
-    <path d="M190 390 Q140 420 110 470" stroke="url(#bG)" strokeWidth="36" strokeLinecap="round" fill="none"/>
-    <path d="M330 390 Q380 420 410 470" stroke="url(#bG)" strokeWidth="36" strokeLinecap="round" fill="none"/>
-    <ellipse cx="260" cy="530" rx="120" ry="35" fill="url(#dG)"/>
-    <rect x="140" y="490" width="240" height="75" rx="12" fill="url(#dG)"/>
-    <ellipse cx="260" cy="490" rx="120" ry="30" fill="#5C2200"/>
-    <ellipse cx="260" cy="487" rx="108" ry="25" fill="#F0E2C4" opacity="0.92"/>
-    <ellipse cx="260" cy="487" rx="108" ry="25" fill="none" stroke="#C9A84C" strokeWidth="1.2" opacity="0.5"/>
-    <ellipse cx="260" cy="487" rx="80" ry="18" fill="none" stroke="#C9A84C" strokeWidth="1" opacity="0.35"/>
-    <line x1="110" y1="465" x2="182" y2="478" stroke="#8B4513" strokeWidth="8" strokeLinecap="round"/>
-    <ellipse cx="108" cy="468" rx="10" ry="10" fill="#5C2800"/>
-    <line x1="410" y1="465" x2="338" y2="478" stroke="#8B4513" strokeWidth="8" strokeLinecap="round"/>
-    <ellipse cx="412" cy="468" rx="10" ry="10" fill="#5C2800"/>
-    <rect x="242" y="330" width="36" height="55" rx="18" fill="url(#bG)"/>
-    <ellipse cx="260" cy="300" rx="62" ry="68" fill="url(#bG)"/>
-    <ellipse cx="260" cy="250" rx="65" ry="35" fill="#150A03"/>
-    <path d="M200 262 Q260 250 320 262" stroke="#C9A84C" strokeWidth="6" fill="none" strokeLinecap="round"/>
-    {[215,235,260,285,305].map((x,i)=><circle key={i} cx={x} cy={258+(i===2?-2:0)} r="3.5" fill="#D4701A"/>)}
-    <ellipse cx="240" cy="300" rx="7" ry="8" fill="#150A03"/>
-    <ellipse cx="280" cy="300" rx="7" ry="8" fill="#150A03"/>
-    <ellipse cx="242" cy="298" rx="2.5" ry="3" fill="white"/>
-    <ellipse cx="282" cy="298" rx="2.5" ry="3" fill="white"/>
-    <path d="M232 288 Q240 284 248 288" stroke="#150A03" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-    <path d="M272 288 Q280 284 288 288" stroke="#150A03" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-    <path d="M245 318 Q260 330 275 318" stroke="#6B1A00" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-    <line x1="260" y1="272" x2="260" y2="285" stroke="#FF3300" strokeWidth="3.5" strokeLinecap="round"/>
-    <circle cx="260" cy="270" r="3" fill="#FF3300"/>
-    <circle cx="198" cy="308" r="6" fill="none" stroke="#C9A84C" strokeWidth="2"/>
-    <circle cx="198" cy="318" r="3" fill="#C9A84C"/>
-    <circle cx="322" cy="308" r="6" fill="none" stroke="#C9A84C" strokeWidth="2"/>
-    <circle cx="322" cy="318" r="3" fill="#C9A84C"/>
-    {[[60,180],[440,140],[70,400],[450,350],[140,80]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="2.5" fill="#C9A84C" opacity={0.25+i*0.04}/>)}
-  </svg>
-);
+
 
 /* ── CANVAS HOOK ── */
 function useCanvas(canvasRef, ready) {
@@ -696,8 +648,7 @@ export default function App() {
         <div className="hero-img-wrap">
           <div className="hero-img-frame">
             <div className="hero-img-inner">
-              {/* Replace with: <img src="dhanush.jpg" alt="Dhanushkodi Adhitiyan"/> */}
-              <HeroIllustration/>
+             <img src={dhanushImg} alt="Dhanushkodi Adhitiyan"/>
               <div className="hero-img-glow"/>
             </div>
             <div className="hero-img-border"/>
@@ -942,9 +893,9 @@ export default function App() {
             <p className="booking-desc">Available for performances, workshops, cultural shows, television, film, and collaborations. Based in Chennai — performing globally.</p>
             <div className="contact-list">
               <div className="contact-row"><span className="contact-icon">📍</span>Chennai, Tamil Nadu, India</div>
-              <div className="contact-row"><span className="contact-icon">✉️</span>dhanush@folkartist.in</div>
-              <div className="contact-row"><span className="contact-icon">📞</span>+91 98765 43210</div>
-              <div className="contact-row"><span className="contact-icon">📸</span>@dhanushkodi.folkartist</div>
+              <div className="contact-row"><span className="contact-icon">✉️</span>@aadhikalaikoodam@gmail.com</div>
+              <div className="contact-row"><span className="contact-icon">📞</span>+91 63811 45510</div>
+              <div className="contact-row"><span className="contact-icon">📸</span>@dhanushkodi_adhityan</div>
             </div>
           </div>
           <div className="reveal-right" style={{transitionDelay:".15s"}}>
@@ -988,13 +939,13 @@ export default function App() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span className="footer-copy">© 2024 Dhanushkodi Adhitiyan — All rights reserved.</span>
+          <span className="footer-copy">© 2026 Gopika.krishnaa — All rights reserved.</span>
           <div className="footer-wave">
             {Array.from({length:12},(_,i)=>(
               <div key={i} className="footer-wave-bar" style={{animationDelay:`${i*0.1}s`,height:`${4+Math.abs(Math.sin(i))*6}px`}}/>
             ))}
           </div>
-          <span className="footer-tamil">பறை – ஒரு அடையாளம்</span>
+          <span className="footer-tamil">கலையும் ★ கல்வியும்</span>
         </div>
       </footer>
 
@@ -1026,7 +977,7 @@ export default function App() {
                 <div className="success-icon">🥁</div>
                 <div className="success-title">Booking Received!</div>
                 <p className="success-desc" style={{marginTop:"0.8rem"}}>Thank you — Dhanush's team will contact you within 24 hours.</p>
-                <div className="success-tamil">பறை – ஒரு அடையாளம்</div>
+                <div className="success-tamil">பறை – கலையும் . கல்வியும்</div>
                 <button className="btn btn-ghost" style={{marginTop:"1.5rem"}} onClick={closeModal} onMouseEnter={H} onMouseLeave={L}>Close</button>
               </div>
             )}
