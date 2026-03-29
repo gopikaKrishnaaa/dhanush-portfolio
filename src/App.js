@@ -672,8 +672,8 @@ export default function App() {
       {/* NAV */}
       <nav className={`nav${navStuck?" stuck":""}`}>
         <a href="#hero" className="nav-logo" onMouseEnter={H} onMouseLeave={L}>
-          Dhanushkodi <em>A</em>
-          <small>B.Com CS · MA Pub Ad</small>
+          Dhanushkodi <em>Adhithiyian</em>
+          <small>Percussionist & Performer</small>
         </a>
         <ul className="nav-links">
           {["gallery","about","projects","services","media","contact"].map(s=>(
