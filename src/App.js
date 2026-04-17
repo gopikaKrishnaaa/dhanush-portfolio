@@ -3,11 +3,15 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import "./App.css";
 import dhanushImg from "./Assests/dhanush.png";
 
-/* ── EMAILJS CONFIG ─────────────────────────────────────────────
-   service_h1gcxwm | template_wl3kwtg | 6kyfkbopfamqRwb_s
-   Make sure your EmailJS template has:
-   {{from_name}} {{from_email}} {{event_type}} {{message}}
-──────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════
+   MENTOR PHOTOS — ADD YOUR IMAGES HERE
+   Step 1: Put your photos inside src/Assests/ folder
+   Step 2: Uncomment the two lines below and update filenames
+══════════════════════════════════════════════════ */
+ import paulJacobImg  from "./Assests/paulJacobImg.jpeg";
+ import thanjaiDavidImg from "./Assests/thanjaiDavidImg.jpeg";
+
+/* ── EMAILJS CONFIG ── */
 const EJS = {
   serviceId:  "service_h1gcxwm",
   templateId: "template_3gk0aun",
@@ -129,6 +133,41 @@ const TIMELINE = [
   { year: "2024", icon: "🌟", title: "Cultural Educator",  desc: "Now actively teaching 17+ art forms, running workshops across schools, colleges and cultural institutions." },
 ];
 
+/* ══════════════════════════════════════════════════
+   MENTOR DATA — update photo field after import
+══════════════════════════════════════════════════ */
+const MENTORS_HOME = [
+  {
+    name:  "Paul Jacob",
+    role:  "Music Director",
+    emoji: "🎵",
+    photo: paulJacobImg,       
+  },
+  {
+    name:  "Thanjai David",
+    role:  "Parai Maestro",
+    emoji: "🥁",
+    photo: thanjaiDavidImg,         
+  },
+];
+
+const MENTORS_ABOUT = [
+  {
+    name:  "Paul Jacob",
+    role:  "Music Director",
+    emoji: "🎵",
+    photo: paulJacobImg,        
+    desc:  "A celebrated Music Director who shaped Dhanush's understanding of classical structure and contemporary folk fusion.",
+  },
+  {
+    name:  "Thanjai David",
+    role:  "Parai Maestro",
+    emoji: "🥁",
+    photo: thanjaiDavidImg,        
+    desc:  "A living legend of the Parai tradition from Thanjavur — under whose guidance Dhanush mastered the sacred drum.",
+  },
+];
+
 const NAV_LINKS = ["gallery", "about", "projects", "services", "media", "contact"];
 
 /* ══════════════════════════════════════════════════
@@ -156,8 +195,7 @@ function useCanvas(canvasRef, ready) {
         this.dx = (Math.random() - 0.5) * 0.3;
       }
       step() {
-        this.y -= this.s;
-        this.x += this.dx;
+        this.y -= this.s; this.x += this.dx;
         if (this.y < -5) { this.y = H + 5; this.x = Math.random() * W; }
       }
       draw() {
@@ -181,18 +219,14 @@ function useCanvas(canvasRef, ready) {
       const g = ctx.createRadialGradient(W / 2, H * 0.5, 0, W / 2, H * 0.5, H * 0.8);
       g.addColorStop(0, "rgba(30,18,5,0.2)");
       g.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
       pts.forEach(p => { p.step(); p.draw(); });
       rings = rings.filter(r => {
         r.r += r.sp;
         const life = 1 - r.r / r.max;
         if (life <= 0) return false;
-        ctx.beginPath();
-        ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(201,168,76,${life * 0.1})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
+        ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(201,168,76,${life * 0.1})`; ctx.lineWidth = 1; ctx.stroke();
         return true;
       });
       raf = requestAnimationFrame(frame);
@@ -214,10 +248,7 @@ function useCursor() {
   const rng = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const move = e => {
-      cur.current = { x: e.clientX, y: e.clientY };
-      setDot({ x: e.clientX, y: e.clientY });
-    };
+    const move = e => { cur.current = { x: e.clientX, y: e.clientY }; setDot({ x: e.clientX, y: e.clientY }); };
     document.addEventListener("mousemove", move);
     const tick = () => {
       rng.current.x += (cur.current.x - rng.current.x) * 0.12;
@@ -233,7 +264,7 @@ function useCursor() {
 }
 
 /* ══════════════════════════════════════════════════
-   REVEAL HOOK  (resets on page change so back-nav works)
+   REVEAL HOOK
 ══════════════════════════════════════════════════ */
 function useReveal(dep) {
   useEffect(() => {
@@ -260,14 +291,11 @@ function useCounters(dep) {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
-        const el     = e.target;
-        const target = +el.dataset.count;
-        const dur    = 1400;
-        let start    = null;
-        const step   = ts => {
+        const el = e.target, target = +el.dataset.count, dur = 1400;
+        let start = null;
+        const step = ts => {
           if (!start) start = ts;
-          const p    = Math.min((ts - start) / dur, 1);
-          const ease = 1 - (1 - p) ** 3;
+          const p = Math.min((ts - start) / dur, 1), ease = 1 - (1 - p) ** 3;
           el.textContent = Math.floor(ease * target) + (p >= 1 ? "+" : "");
           if (p < 1) requestAnimationFrame(step);
         };
@@ -281,69 +309,61 @@ function useCounters(dep) {
 }
 
 /* ══════════════════════════════════════════════════
-   BOOKING FORM COMPONENT  (used in page + modal)
+   BOOKING FORM
 ══════════════════════════════════════════════════ */
 function BookingForm({ onSuccess }) {
-  const [fd, setFd] = useState({ name: "", email: "", event: "", message: "" });
-  const [filled, setFilled] = useState({ name: false, email: false, event: false, message: false });
-  const [sending, setSending] = useState(false);
-  const [err, setErr] = useState("");
+  const [fd, setFd]       = useState({ name: "", email: "", event: "", message: "" });
+  const [filled, setFill] = useState({ name: false, email: false, event: false, message: false });
+  const [sending, setSend] = useState(false);
+  const [err, setErr]     = useState("");
 
   const update = (k, v) => {
-    setFd(prev => ({ ...prev, [k]: v }));
-    setFilled(prev => ({ ...prev, [k]: v.length > 0 }));
+    setFd(p => ({ ...p, [k]: v }));
+    setFill(p => ({ ...p, [k]: v.length > 0 }));
   };
 
   const handle = async e => {
     e.preventDefault();
-    setSending(true);
-    setErr("");
+    setSend(true); setErr("");
     try {
-
-       await sendEmail({
-  name:    fd.name,
-  email:   fd.email,
-  message: fd.event + " — " + fd.message,
-});
-      
+      await sendEmail({
+        name:    fd.name,
+        email:   fd.email,
+        message: fd.event + " — " + fd.message,
+      });
       onSuccess();
-    } catch (ex) {
+    } catch {
       setErr("Failed to send. Please try again or contact us directly.");
     } finally {
-      setSending(false);
+      setSend(false);
     }
   };
 
   return (
     <form className="booking-form" onSubmit={handle}>
-      {/* Name */}
-      <div className={`form-field ${filled.name ? "filled" : ""}`}>
-        <label>Your Name</label>
-        <input type="text" value={fd.name} onChange={e => update("name", e.target.value)} required />
-        <div className="field-glow" />
-      </div>
+      {[
+        { k: "name",  l: "Your Name",         t: "text"  },
+        { k: "email", l: "Email Address",      t: "email" },
+      ].map(f => (
+        <div key={f.k} className={`form-field ${filled[f.k] ? "filled" : ""}`}>
+          <label>{f.l}</label>
+          <input type={f.t} value={fd[f.k]} onChange={e => update(f.k, e.target.value)} required />
+          <div className="field-glow" />
+        </div>
+      ))}
 
-      {/* Email */}
-      <div className={`form-field ${filled.email ? "filled" : ""}`}>
-        <label>Email Address</label>
-        <input type="email" value={fd.email} onChange={e => update("email", e.target.value)} required />
-        <div className="field-glow" />
-      </div>
-
-      {/* Event type */}
       <div className={`form-field ${filled.event ? "filled" : ""}`}>
         <label>Event Type</label>
         <select value={fd.event} onChange={e => update("event", e.target.value)} required>
           <option value="" />
-          {["Stage Performance", "Cultural Festival", "Workshop", "Wedding",
-            "Television / Film", "School / College Event", "Other"].map(o => (
+          {["Stage Performance","Cultural Festival","Workshop","Wedding",
+            "Television / Film","School / College Event","Other"].map(o => (
             <option key={o}>{o}</option>
           ))}
         </select>
         <div className="field-glow" />
       </div>
 
-      {/* Message */}
       <div className={`form-field ${filled.message ? "filled" : ""}`}>
         <label>Message / Event Details</label>
         <textarea rows="3" value={fd.message} onChange={e => update("message", e.target.value)} />
@@ -360,7 +380,7 @@ function BookingForm({ onSuccess }) {
 }
 
 /* ══════════════════════════════════════════════════
-   ABOUT PAGE COMPONENT
+   ABOUT PAGE
 ══════════════════════════════════════════════════ */
 function AboutPage({ onBack, H, L, magMove, magLeave }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -370,16 +390,13 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
   return (
     <div className="ap-wrap">
 
-      {/* Top nav */}
       <nav className="ap-nav">
-        <button className="ap-back-btn" onClick={onBack} onMouseEnter={H} onMouseLeave={L}>
-          ← Back
-        </button>
+        <button className="ap-back-btn" onClick={onBack} onMouseEnter={H} onMouseLeave={L}>← Back</button>
         <div className="ap-nav-title">Dhanushkodi <em>Adhitiyan</em></div>
         <div style={{ width: "80px" }} />
       </nav>
 
-      {/* Hero */}
+      {/* AP Hero */}
       <div className="ap-hero">
         <div className="ap-hero-img-col reveal-left">
           <div className="ap-hero-img-frame">
@@ -407,7 +424,7 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
             Every beat carries a thousand years of Tamil heritage."
           </blockquote>
           <div className="ap-hero-chips">
-            {["Folk Arts", "Parai", "Karagattam", "Silambattam", "Mayilattam", "Thavil", "Nadaswaram"].map(c => (
+            {["Folk Arts","Parai","Karagattam","Silambattam","Mayilattam","Thavil","Nadaswaram"].map(c => (
               <span key={c} className="ap-chip">{c}</span>
             ))}
           </div>
@@ -426,13 +443,11 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
             Born and raised in the cultural heart of Tamil Nadu,{" "}
             <strong>Dhanushkodi Adhitiyan</strong> discovered the Parai drum at the age of eight —
             not in a classroom, but through the living, breathing tradition of community celebration.
-            The ancient instrument spoke to him in a language deeper than words.
           </p>
           <p className="reveal" style={{ transitionDelay: ".2s" }}>
             Over <em>10+ years</em>, he has dedicated himself to mastering not just Parai, but{" "}
             <strong>17 distinct Tamil folk art forms</strong> — from the martial elegance of
-            Silambattam to the devotional grace of Mayilattam. Each form is a thread in the vast
-            tapestry of Tamil cultural identity.
+            Silambattam to the devotional grace of Mayilattam.
           </p>
           <p className="reveal" style={{ transitionDelay: ".25s" }}>
             Guided by master musicians <strong>Paul Jacob</strong> (Music Director) and{" "}
@@ -443,34 +458,30 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
           <p className="reveal" style={{ transitionDelay: ".3s" }}>
             Today, Dhanush is not just a performer — he is a{" "}
             <strong>guardian of living heritage</strong>. Through workshops in schools, colleges,
-            and cultural institutions, he ensures that the ancient rhythms of Tamil Nadu echo into
-            the future.
+            and cultural institutions, he ensures that the ancient rhythms of Tamil Nadu echo into the future.
           </p>
         </div>
       </div>
 
-      {/* Mentors */}
+      {/* Mentors — ABOUT PAGE (larger card with description) */}
       <div className="ap-mentors">
         <div className="sec-label reveal">Guided By</div>
         <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>
           Mentors & <em>Masters</em>
         </h2>
         <div className="ap-mentors-grid">
-          {[
-            {
-              name: "Paul Jacob", role: "Music Director", emoji: "🎵",
-              desc: "A celebrated Music Director who shaped Dhanush's understanding of classical structure and contemporary folk fusion.",
-            },
-            {
-              name: "Thanjai David", role: "Parai Maestro", emoji: "🥁",
-              desc: "A living legend of the Parai tradition from Thanjavur — under whose guidance Dhanush mastered the sacred drum.",
-            },
-          ].map(m => (
+          {MENTORS_ABOUT.map(m => (
             <div key={m.name} className="ap-mentor-card" onMouseEnter={H} onMouseLeave={L}>
+
+              {/* ── MENTOR PHOTO (68px circle) ── */}
               <div className="ap-mentor-avatar">
-                {/* Replace emoji with: <img src="paul.jpg" alt={m.name}/> */}
-                {m.emoji}
+                {m.photo ? (
+                  <img src={m.photo} alt={m.name} />
+                ) : (
+                  <span style={{ fontSize: "1.9rem" }}>{m.emoji}</span>
+                )}
               </div>
+
               <div>
                 <div className="ap-mentor-name">{m.name}</div>
                 <div className="ap-mentor-role">{m.role}</div>
@@ -504,9 +515,7 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
       {/* Awards */}
       <div className="ap-awards">
         <div className="sec-label reveal">Recognition</div>
-        <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>
-          Awards & <em>Honours</em>
-        </h2>
+        <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>Awards & <em>Honours</em></h2>
         <div className="ap-awards-grid">
           {AWARDS.map((a, i) => (
             <div key={i} className="ap-award-card reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
@@ -520,7 +529,7 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
         </div>
       </div>
 
-      {/* Return CTA */}
+      {/* Back CTA */}
       <div className="ap-back-cta">
         <button
           className="ap-back-cta-btn"
@@ -532,7 +541,6 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
           <span>← Return to Portfolio</span>
         </button>
       </div>
-
     </div>
   );
 }
@@ -541,8 +549,6 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
    MAIN APP
 ══════════════════════════════════════════════════ */
 export default function App() {
-
-  /* ── State ── */
   const [page, setPage]               = useState("home");
   const [preCount, setPreCount]       = useState(0);
   const [preReady, setPreReady]       = useState(false);
@@ -558,47 +564,34 @@ export default function App() {
   const [previewOn, setPreviewOn]     = useState(false);
   const [previewBg, setPreviewBg]     = useState("");
 
-  /* ── Refs ── */
-  const canvasRef  = useRef(null);
-  const projTrack  = useRef(null);
-  const drag       = useRef({ on: false, sx: 0, sl: 0 });
-  const tStart     = useRef(0);
-  const tScroll    = useRef(0);
+  const canvasRef = useRef(null);
+  const projTrack = useRef(null);
+  const drag      = useRef({ on: false, sx: 0, sl: 0 });
+  const tStart    = useRef(0);
+  const tScroll   = useRef(0);
 
-  /* ── Custom hooks ── */
   const { dot, ring, hov, setHov } = useCursor();
   useCanvas(canvasRef, canvasOn);
-  useReveal(activeTab + "|" + page);   // re-runs on tab change OR page change
+  useReveal(activeTab + "|" + page);
   useCounters(page);
 
-  /* ── Preloader animation ── */
   useEffect(() => {
-    const dur = 2200;
-    const t0  = performance.now();
+    const dur = 2200, t0 = performance.now();
     const step = now => {
-      const t    = Math.min((now - t0) / dur, 1);
-      const ease = 1 - (1 - t) ** 3;
+      const t = Math.min((now - t0) / dur, 1), ease = 1 - (1 - t) ** 3;
       setPreCount(Math.round(ease * 100));
-      if (t < 1) {
-        requestAnimationFrame(step);
-      } else {
-        setTimeout(() => {
-          setPreReady(true);
-          setTimeout(() => setCanvasOn(true), 300);
-        }, 300);
-      }
+      if (t < 1) requestAnimationFrame(step);
+      else setTimeout(() => { setPreReady(true); setTimeout(() => setCanvasOn(true), 300); }, 300);
     };
     requestAnimationFrame(step);
   }, []);
 
-  /* ── Sticky nav ── */
   useEffect(() => {
     const fn = () => setNavStuck(window.scrollY > 60);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  /* ── Scroll ripple ── */
   useEffect(() => {
     let lastY = 0;
     const fn = () => {
@@ -606,7 +599,7 @@ export default function App() {
         lastY = window.scrollY;
         const el = document.createElement("div");
         el.className = "scroll-ripple";
-        el.style.cssText = `left:${window.innerWidth / 2}px;top:${window.innerHeight / 2}px`;
+        el.style.cssText = `left:${window.innerWidth/2}px;top:${window.innerHeight/2}px`;
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 900);
       }
@@ -615,7 +608,6 @@ export default function App() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  /* ── Hero parallax ── */
   useEffect(() => {
     const fn = () => {
       if (window.scrollY < window.innerHeight) {
@@ -629,12 +621,10 @@ export default function App() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  /* ── Gallery preview follow ── */
   useEffect(() => {
     const fn = e => {
       const pw = 200, ph = 270;
-      let x = e.clientX + 28;
-      let y = e.clientY - 70;
+      let x = e.clientX + 28, y = e.clientY - 70;
       if (x + pw > window.innerWidth  - 12) x = e.clientX - pw - 28;
       if (y + ph > window.innerHeight - 12) y = window.innerHeight - ph - 12;
       if (y < 12) y = 12;
@@ -644,49 +634,36 @@ export default function App() {
     return () => document.removeEventListener("mousemove", fn);
   }, []);
 
-  /* ── Project drag ── */
   const onDragStart = useCallback(e => {
-    drag.current = {
-      on: true,
-      sx: e.pageX - projTrack.current.offsetLeft,
-      sl: projTrack.current.scrollLeft,
-    };
+    drag.current = { on: true, sx: e.pageX - projTrack.current.offsetLeft, sl: projTrack.current.scrollLeft };
   }, []);
   const onDragMove = useCallback(e => {
     if (!drag.current.on) return;
     e.preventDefault();
-    projTrack.current.scrollLeft =
-      drag.current.sl - (e.pageX - projTrack.current.offsetLeft - drag.current.sx) * 1.2;
+    projTrack.current.scrollLeft = drag.current.sl - (e.pageX - projTrack.current.offsetLeft - drag.current.sx) * 1.2;
   }, []);
-  const onDragEnd = useCallback(() => { drag.current.on = false; }, []);
+  const onDragEnd  = useCallback(() => { drag.current.on = false; }, []);
 
-  /* ── Magnetic buttons ── */
-  const magMove = useCallback((e, el) => {
+  const magMove  = useCallback((e, el) => {
     const r = el.getBoundingClientRect();
-    el.style.transform = `translate(${(e.clientX - r.left - r.width  / 2) * 0.2}px,${(e.clientY - r.top  - r.height / 2) * 0.2}px)`;
+    el.style.transform = `translate(${(e.clientX-r.left-r.width/2)*0.2}px,${(e.clientY-r.top-r.height/2)*0.2}px)`;
   }, []);
   const magLeave = useCallback(el => { el.style.transform = ""; }, []);
 
-  /* ── Helpers ── */
   const H = () => setHov(true);
   const L = () => setHov(false);
 
-  const openModal  = () => { setModalOpen(true);  setModalDone(false); };
+  const openModal  = () => { setModalOpen(true); setModalDone(false); };
   const closeModal = () => setModalOpen(false);
+  const goAbout    = () => { setPage("about"); window.scrollTo(0, 0); };
+  const goHome     = () => { setPage("home"); setTimeout(() => window.scrollTo(0, 0), 50); };
 
-  const goAbout = () => { setPage("about"); window.scrollTo(0, 0); };
-  const goHome  = () => { setPage("home");  setTimeout(() => window.scrollTo(0, 0), 50); };
-
-  const filtered   = filter === "all" ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.cat === filter);
-  const renumbered = filtered.map((g, i) => ({ ...g, num: String(i + 1).padStart(2, "0") }));
+  const filtered    = filter === "all" ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.cat === filter);
+  const renumbered  = filtered.map((g, i) => ({ ...g, num: String(i + 1).padStart(2, "0") }));
   const currentList = activeTab === "classes" ? CLASSES : SHOWS;
 
-  /* ══════════════════════════════════════════════
-     RENDER
-  ══════════════════════════════════════════════ */
   return (
     <>
-      {/* Persistent elements */}
       <div className="grain" />
       <canvas ref={canvasRef} className={`bg-canvas${canvasOn ? " visible" : ""}`} />
 
@@ -706,9 +683,7 @@ export default function App() {
         </div>
         <div className="pre-mid">
           <div className="pre-count">{preCount}</div>
-          <div className="pre-track">
-            <div className="pre-fill" style={{ width: `${preCount}%` }} />
-          </div>
+          <div className="pre-track"><div className="pre-fill" style={{ width: `${preCount}%` }} /></div>
         </div>
         <div className="pre-bot">
           <div className="pre-tagline">Echoes of Tamil Rhythm</div>
@@ -716,42 +691,31 @@ export default function App() {
         </div>
       </div>
 
-      {/* ── ABOUT PAGE ── */}
+      {/* About Page */}
       {page === "about" && (
         <AboutPage onBack={goHome} H={H} L={L} magMove={magMove} magLeave={magLeave} />
       )}
 
-      {/* ── HOME PAGE ── */}
+      {/* Home Page */}
       {page === "home" && (
         <>
-
-          {/* ─ NAV ─ */}
+          {/* NAV */}
           <nav className={`nav${navStuck ? " stuck" : ""}`}>
             <a href="#hero" className="nav-logo" onMouseEnter={H} onMouseLeave={L}>
               Dhanushkodi <em>A</em>
               <small>Percussionist & Performer</small>
             </a>
-
             <ul className="nav-links">
               {NAV_LINKS.map(s => (
-                <li key={s}>
-                  <a href={`#${s}`} onMouseEnter={H} onMouseLeave={L}>{s}</a>
-                </li>
+                <li key={s}><a href={`#${s}`} onMouseEnter={H} onMouseLeave={L}>{s}</a></li>
               ))}
             </ul>
-
-            {/* Hamburger */}
             <button className="nav-ham" onClick={() => setMenuOpen(true)} aria-label="Open menu">
               <span /><span /><span />
             </button>
-
-            <button
-              className="nav-cta"
-              onClick={openModal}
-              onMouseEnter={H}
-              onMouseMove={e => magMove(e, e.currentTarget)}
-              onMouseLeave={e => { L(); magLeave(e.currentTarget); }}
-            >
+            <button className="nav-cta" onClick={openModal}
+              onMouseEnter={H} onMouseMove={e => magMove(e, e.currentTarget)}
+              onMouseLeave={e => { L(); magLeave(e.currentTarget); }}>
               Book Now
             </button>
           </nav>
@@ -760,38 +724,28 @@ export default function App() {
           <div className={`nav-mobile-menu${menuOpen ? " open" : ""}`}>
             <button className="nav-mobile-close" onClick={() => setMenuOpen(false)}>✕</button>
             {NAV_LINKS.map(s => (
-              <a key={s} href={`#${s}`} onClick={() => setMenuOpen(false)}>
-                {s}
-              </a>
+              <a key={s} href={`#${s}`} onClick={() => setMenuOpen(false)}>{s}</a>
             ))}
-            <button
-              className="nav-mobile-cta"
-              onClick={() => { setMenuOpen(false); openModal(); }}
-            >
+            <button className="nav-mobile-cta" onClick={() => { setMenuOpen(false); openModal(); }}>
               Book Now
             </button>
           </div>
 
-          {/* ─ HERO ─ */}
+          {/* HERO */}
           <section id="hero" className="hero">
             <div className="hero-bg" />
             <div className="particles-wrap">
               {Array.from({ length: 14 }, (_, i) => (
-                <div
-                  key={i}
-                  className="particle"
-                  style={{
-                    left: `${5 + i * 6.5}%`,
-                    "--dx": `${(i % 2 === 0 ? 1 : -1) * (20 + i * 4)}px`,
-                    animationDuration:  `${10 + i * 0.9}s`,
-                    animationDelay:     `${i * 0.5}s`,
-                    width:  `${1 + i % 3 * 0.5}px`,
-                    height: `${1 + i % 3 * 0.5}px`,
-                  }}
-                />
+                <div key={i} className="particle" style={{
+                  left: `${5 + i * 6.5}%`,
+                  "--dx": `${(i % 2 === 0 ? 1 : -1) * (20 + i * 4)}px`,
+                  animationDuration: `${10 + i * 0.9}s`,
+                  animationDelay:    `${i * 0.5}s`,
+                  width:  `${1 + i % 3 * 0.5}px`,
+                  height: `${1 + i % 3 * 0.5}px`,
+                }} />
               ))}
             </div>
-
             <div className="hero-img-wrap">
               <div className="hero-img-frame">
                 <div className="hero-img-inner">
@@ -801,15 +755,12 @@ export default function App() {
                 <div className="hero-img-border" />
               </div>
             </div>
-
             <div className="hero-content">
               <div className="hero-eyebrow">
                 <div className="hero-eyebrow-line" />
                 <span className="hero-eyebrow-text">Tamil Folk Arts</span>
               </div>
-              <h1 className="hero-name">
-                Dhanushkodi<br /><em>Adhitiyan</em>
-              </h1>
+              <h1 className="hero-name">Dhanushkodi<br /><em>Adhitiyan</em></h1>
               <div className="hero-degrees">
                 <span className="hero-deg">B.Com CS</span>
                 <span className="hero-deg-sep">·</span>
@@ -819,45 +770,35 @@ export default function App() {
                 <span className="hero-role-tag">Percussionist & Performer</span>
                 <span className="hero-role-tag">Parai Educator</span>
               </div>
-              <blockquote className="hero-tagline">
-                "Rhythm is not music —<br />it is <em>life</em>"
-              </blockquote>
+              <blockquote className="hero-tagline">"Rhythm is not music —<br />it is <em>life</em>"</blockquote>
               <div className="hero-btns">
-                <button
-                  className="btn btn-gold"
+                <button className="btn btn-gold"
                   onClick={() => document.getElementById("media").scrollIntoView({ behavior: "smooth" })}
-                  onMouseEnter={H}
-                  onMouseMove={e => magMove(e, e.currentTarget)}
-                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}
-                >
+                  onMouseEnter={H} onMouseMove={e => magMove(e, e.currentTarget)}
+                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}>
                   <span>▶ Watch Performance</span>
                 </button>
-                <button
-                  className="btn btn-ghost"
-                  onClick={openModal}
-                  onMouseEnter={H}
-                  onMouseMove={e => magMove(e, e.currentTarget)}
-                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}
-                >
+                <button className="btn btn-ghost" onClick={openModal}
+                  onMouseEnter={H} onMouseMove={e => magMove(e, e.currentTarget)}
+                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}>
                   Book a Show
                 </button>
               </div>
             </div>
-
             <div className="hero-scroll">
               <span className="hero-scroll-text">Scroll</span>
               <div className="hero-scroll-bar" />
             </div>
           </section>
 
-          {/* ─ MARQUEE ─ */}
+          {/* MARQUEE */}
           <div className="marquee-band" aria-hidden="true">
             <div className="marquee-inner">
               {[...SHOWS, ...SHOWS].map((s, i) => <span key={i}>{s.name}</span>)}
             </div>
           </div>
 
-          {/* ─ GALLERY ─ */}
+          {/* GALLERY */}
           <section id="gallery" className="gallery-sec">
             <div className="gallery-header reveal">
               <div>
@@ -866,31 +807,17 @@ export default function App() {
               </div>
               <div className="gallery-count">{renumbered.length} works</div>
             </div>
-
             <div className="filter-row reveal" style={{ transitionDelay: "0.1s" }}>
-              {[["all", "All"], ["international", "International"], ["festival", "Festival"],
-                ["tv", "TV / Film"], ["concert", "Concert"]].map(([k, l]) => (
-                <button
-                  key={k}
-                  className={`filter-btn${filter === k ? " active" : ""}`}
-                  onClick={() => setFilter(k)}
-                  onMouseEnter={H}
-                  onMouseLeave={L}
-                >
-                  {l}
-                </button>
+              {[["all","All"],["international","International"],["festival","Festival"],["tv","TV / Film"],["concert","Concert"]].map(([k, l]) => (
+                <button key={k} className={`filter-btn${filter === k ? " active" : ""}`}
+                  onClick={() => setFilter(k)} onMouseEnter={H} onMouseLeave={L}>{l}</button>
               ))}
             </div>
-
             <div className="gallery-list">
               {renumbered.map((g, i) => (
-                <div
-                  key={g.title}
-                  className="gallery-item reveal"
-                  style={{ transitionDelay: `${i * 0.04}s` }}
+                <div key={g.title} className="gallery-item reveal" style={{ transitionDelay: `${i * 0.04}s` }}
                   onMouseEnter={() => { H(); setPreviewBg(GALLERY_PALETTES[i % GALLERY_PALETTES.length]); setPreviewOn(true); }}
-                  onMouseLeave={() => { L(); setPreviewOn(false); }}
-                >
+                  onMouseLeave={() => { L(); setPreviewOn(false); }}>
                   <div className="gi-num">{g.num}</div>
                   <div className="gi-title">{g.title}</div>
                   <div className="gi-meta">{g.meta}</div>
@@ -898,14 +825,11 @@ export default function App() {
                 </div>
               ))}
             </div>
-
-            <div
-              className={`gallery-preview${previewOn ? " active" : ""}`}
-              style={{ left: previewPos.left, top: previewPos.top, background: previewBg }}
-            />
+            <div className={`gallery-preview${previewOn ? " active" : ""}`}
+              style={{ left: previewPos.left, top: previewPos.top, background: previewBg }} />
           </section>
 
-          {/* ─ ABOUT ─ */}
+          {/* ABOUT */}
           <section id="about" className="about-sec">
             <div className="about-watermark">DHANUSH</div>
             <div className="about-grid">
@@ -920,14 +844,21 @@ export default function App() {
                   culture to stages across the world, preserving art forms that speak beyond language.
                 </p>
 
+                {/* MENTOR CARDS — HOME */}
                 <div className="mentor-block reveal" style={{ transitionDelay: ".3s" }}>
                   <div className="mentor-label">Mentored & Guided By</div>
-                  {[
-                    { name: "Paul Jacob",    role: "Music Director", emoji: "🎵" },
-                    { name: "Thanjai David", role: "Parai Maestro",  emoji: "🥁" },
-                  ].map(m => (
+                  {MENTORS_HOME.map(m => (
                     <div key={m.name} className="mentor-card" onMouseEnter={H} onMouseLeave={L}>
-                      <div className="mentor-photo">{m.emoji}</div>
+
+                      {/* ── MENTOR PHOTO (58px circle) ── */}
+                      <div className="mentor-photo">
+                        {m.photo ? (
+                          <img src={m.photo} alt={m.name} />
+                        ) : (
+                          <span style={{ fontSize: "1.5rem" }}>{m.emoji}</span>
+                        )}
+                      </div>
+
                       <div>
                         <div className="mentor-name-text">{m.name}</div>
                         <div className="mentor-role-text">{m.role}</div>
@@ -936,13 +867,8 @@ export default function App() {
                   ))}
                 </div>
 
-                <button
-                  className="about-page-cta reveal"
-                  style={{ transitionDelay: ".4s" }}
-                  onClick={goAbout}
-                  onMouseEnter={H}
-                  onMouseLeave={L}
-                >
+                <button className="about-page-cta reveal" style={{ transitionDelay: ".4s" }}
+                  onClick={goAbout} onMouseEnter={H} onMouseLeave={L}>
                   <span>Read Full Story</span>
                   <span className="arrow">→</span>
                 </button>
@@ -952,7 +878,7 @@ export default function App() {
                 <div className="reveal" style={{ transitionDelay: ".1s" }}>
                   <div className="about-sub-label">Recognised By</div>
                   <div className="badge-row">
-                    {["IIT Madras", "Education Minister", "Kanimozhi Karunanidhi MP", "Nanban Organisation"].map(b => (
+                    {["IIT Madras","Education Minister","Kanimozhi Karunanidhi MP","Nanban Organisation"].map(b => (
                       <span key={b} className="badge" onMouseEnter={H} onMouseLeave={L}>{b}</span>
                     ))}
                   </div>
@@ -961,9 +887,9 @@ export default function App() {
                 <div className="reveal" style={{ transitionDelay: ".3s" }}>
                   <div className="about-sub-label">By the Numbers</div>
                   {[
-                    { count: 10, desc: <> Years of active<br />performance & teaching</> },
-                    { count: 17, desc: <> Art forms performed<br />& taught</> },
-                    { count: 10, desc: <> Major events across<br />India & internationally</> },
+                    { count: 10, desc: <>Years of active<br />performance & teaching</> },
+                    { count: 17, desc: <>Art forms performed<br />& taught</> },
+                    { count: 10, desc: <>Major events across<br />India & internationally</> },
                   ].map(({ count, desc }, i) => (
                     <div key={i} className="stat-row">
                       <div className="stat-num" data-count={count}>0</div>
@@ -975,25 +901,17 @@ export default function App() {
             </div>
           </section>
 
-          {/* ─ PROJECTS ─ */}
+          {/* PROJECTS */}
           <section id="projects" className="projects-sec">
             <div className="sec-label reveal">Stage Presence</div>
-            <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>
-              Featured <em>Performances</em>
-            </h2>
+            <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>Featured <em>Performances</em></h2>
             <p className="proj-hint reveal" style={{ transitionDelay: ".2s" }}>← Drag to explore →</p>
-
             <div className="proj-scroll-wrap">
-              <div
-                className="proj-track"
-                ref={projTrack}
-                onMouseDown={onDragStart}
-                onMouseMove={onDragMove}
-                onMouseUp={onDragEnd}
-                onMouseLeave={onDragEnd}
+              <div className="proj-track" ref={projTrack}
+                onMouseDown={onDragStart} onMouseMove={onDragMove}
+                onMouseUp={onDragEnd} onMouseLeave={onDragEnd}
                 onTouchStart={e => { tStart.current = e.touches[0].pageX; tScroll.current = projTrack.current.scrollLeft; }}
-                onTouchMove={e => { projTrack.current.scrollLeft = tScroll.current - (e.touches[0].pageX - tStart.current) * 1.1; }}
-              >
+                onTouchMove={e => { projTrack.current.scrollLeft = tScroll.current - (e.touches[0].pageX - tStart.current) * 1.1; }}>
                 {PROJECTS.map((p, i) => (
                   <div key={p.name} className="proj-card" onMouseEnter={H} onMouseLeave={L}>
                     <div className="proj-card-bg" style={{ background: p.bg }} />
@@ -1009,7 +927,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* ─ EXPERIENCE & AWARDS ─ */}
+          {/* EXP & AWARDS */}
           <section id="exp-awards" className="exp-awards-sec">
             <div className="ea-grid">
               <div className="reveal-left">
@@ -1038,38 +956,23 @@ export default function App() {
             </div>
           </section>
 
-          {/* ─ SERVICES ─ */}
+          {/* SERVICES */}
           <section id="services" className="services-sec">
             <div className="sec-label reveal">Repertoire</div>
-            <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>
-              Classes & <em>Shows</em>
-            </h2>
+            <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>Classes & <em>Shows</em></h2>
             <div className="toggle-wrap reveal" style={{ transitionDelay: ".2s" }}>
-              <div
-                className="toggle-slider"
-                style={{ width: "50%", transform: `translateX(${activeTab === "classes" ? "0%" : "100%"})` }}
-              />
-              {["classes", "shows"].map(t => (
-                <button
-                  key={t}
-                  className={`toggle-btn${activeTab === t ? " active" : ""}`}
-                  onClick={() => setActiveTab(t)}
-                  onMouseEnter={H}
-                  onMouseLeave={L}
-                >
+              <div className="toggle-slider" style={{ width: "50%", transform: `translateX(${activeTab === "classes" ? "0%" : "100%"})` }} />
+              {["classes","shows"].map(t => (
+                <button key={t} className={`toggle-btn${activeTab === t ? " active" : ""}`}
+                  onClick={() => setActiveTab(t)} onMouseEnter={H} onMouseLeave={L}>
                   {t.charAt(0).toUpperCase() + t.slice(1)}
                 </button>
               ))}
             </div>
             <div className="svc-grid">
               {currentList.map((s, i) => (
-                <div
-                  key={`${activeTab}-${i}`}
-                  className="svc-cell"
-                  style={{ transitionDelay: `${(i % 4) * 0.07}s` }}
-                  onMouseEnter={H}
-                  onMouseLeave={L}
-                >
+                <div key={`${activeTab}-${i}`} className="svc-cell" style={{ transitionDelay: `${(i % 4) * 0.07}s` }}
+                  onMouseEnter={H} onMouseLeave={L}>
                   <div className="svc-cell-num">{String(i + 1).padStart(2, "0")}</div>
                   <div className="svc-icon">{s.icon}</div>
                   <div className="svc-name">{s.name}</div>
@@ -1080,25 +983,19 @@ export default function App() {
             </div>
           </section>
 
-          {/* ─ MEDIA ─ */}
+          {/* MEDIA */}
           <section id="media" className="media-sec">
             <div className="sec-label reveal">Visual Archive</div>
-            <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>
-              Watch & <em>Feel</em>
-            </h2>
+            <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>Watch & <em>Feel</em></h2>
             <div className="media-grid reveal" style={{ transitionDelay: ".2s" }}>
               {MEDIA.map((m, i) => (
                 <div key={i} className="media-item" onMouseEnter={H} onMouseLeave={L}>
                   <div className="media-inner">
-                    {/* Replace placeholder with real image/video:
-                        <img src="show.jpg" style={{width:"100%",height:"100%",objectFit:"cover"}}/> */}
                     <div className="media-placeholder" style={{ background: m.bg }}>
                       <span>{m.emoji}</span>
                       <span className="media-placeholder-label">{m.label}</span>
                     </div>
-                    <div className="media-hover-overlay">
-                      <div className="media-play">▶</div>
-                    </div>
+                    <div className="media-hover-overlay"><div className="media-play">▶</div></div>
                   </div>
                   <div className="media-caption">{m.label}</div>
                 </div>
@@ -1106,7 +1003,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* ─ BOOKING / CONTACT ─ */}
+          {/* CONTACT */}
           <section id="contact" className="booking-sec">
             <div className="booking-grid">
               <div className="reveal-left">
@@ -1123,7 +1020,6 @@ export default function App() {
                   <div className="contact-row"><span className="contact-icon">📸</span> @dhanushkodi_adhityan</div>
                 </div>
               </div>
-
               <div className="reveal-right" style={{ transitionDelay: ".15s" }}>
                 {!contactDone ? (
                   <BookingForm onSuccess={() => setContactDone(true)} />
@@ -1137,20 +1033,15 @@ export default function App() {
                     <div className="success-tamil" style={{ marginTop: "1.5rem" }}>
                       பறை – கலையும் · கல்வியும்
                     </div>
-                    <button
-                      className="btn btn-ghost"
-                      style={{ marginTop: "1.5rem", cursor: "pointer" }}
-                      onClick={() => setContactDone(false)}
-                    >
-                      Send Another
-                    </button>
+                    <button className="btn btn-ghost" style={{ marginTop: "1.5rem", cursor: "pointer" }}
+                      onClick={() => setContactDone(false)}>Send Another</button>
                   </div>
                 )}
               </div>
             </div>
           </section>
 
-          {/* ─ FOOTER ─ */}
+          {/* FOOTER */}
           <footer className="footer">
             <div className="footer-top">
               <div>
@@ -1166,15 +1057,8 @@ export default function App() {
                   <div key={g.title} className="footer-link-group">
                     <div className="footer-link-group-title">{g.title}</div>
                     {g.links.map(([href, label]) => (
-                      <a
-                        key={label}
-                        href={`#${href.replace("#", "")}`}
-                        className="footer-link"
-                        onMouseEnter={H}
-                        onMouseLeave={L}
-                      >
-                        {label}
-                      </a>
+                      <a key={label} href={`#${href.replace("#","")}`} className="footer-link"
+                        onMouseEnter={H} onMouseLeave={L}>{label}</a>
                     ))}
                   </div>
                 ))}
@@ -1184,26 +1068,19 @@ export default function App() {
               <span className="footer-copy">© 2026 Gopika.krishnaa — All rights reserved.</span>
               <div className="footer-wave">
                 {Array.from({ length: 10 }, (_, i) => (
-                  <div
-                    key={i}
-                    className="footer-wave-bar"
-                    style={{ animationDelay: `${i * 0.1}s`, height: `${4 + Math.abs(Math.sin(i)) * 6}px` }}
-                  />
+                  <div key={i} className="footer-wave-bar"
+                    style={{ animationDelay: `${i * 0.1}s`, height: `${4 + Math.abs(Math.sin(i)) * 6}px` }} />
                 ))}
               </div>
               <span className="footer-tamil">கலையும் ★ கல்வியும்</span>
             </div>
           </footer>
 
-          {/* ─ MODAL ─ */}
+          {/* MODAL */}
           {modalOpen && (
-            <div
-              className="modal-bg"
-              onClick={e => { if (e.target.classList.contains("modal-bg")) closeModal(); }}
-            >
+            <div className="modal-bg" onClick={e => { if (e.target.classList.contains("modal-bg")) closeModal(); }}>
               <div className="modal-box">
                 <button className="modal-close-btn" onClick={closeModal} onMouseEnter={H} onMouseLeave={L}>✕</button>
-
                 {!modalDone ? (
                   <>
                     <div className="modal-title">Book a Show</div>
@@ -1218,21 +1095,13 @@ export default function App() {
                       Thank you — Dhanush's team will contact you within 24 hours.
                     </p>
                     <div className="success-tamil">பறை – கலையும் · கல்வியும்</div>
-                    <button
-                      className="btn btn-ghost"
-                      style={{ marginTop: "1.5rem", cursor: "pointer" }}
-                      onClick={closeModal}
-                      onMouseEnter={H}
-                      onMouseLeave={L}
-                    >
-                      Close
-                    </button>
+                    <button className="btn btn-ghost" style={{ marginTop: "1.5rem", cursor: "pointer" }}
+                      onClick={closeModal} onMouseEnter={H} onMouseLeave={L}>Close</button>
                   </div>
                 )}
               </div>
             </div>
           )}
-
         </>
       )}
     </>
