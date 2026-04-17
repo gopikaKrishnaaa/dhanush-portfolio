@@ -4,12 +4,10 @@ import "./App.css";
 import dhanushImg from "./Assests/dhanush.png";
 
 /* ══════════════════════════════════════════════════
-   MENTOR PHOTOS — ADD YOUR IMAGES HERE
-   Step 1: Put your photos inside src/Assests/ folder
-   Step 2: Uncomment the two lines below and update filenames
+   MENTOR PHOTOS
 ══════════════════════════════════════════════════ */
- import paulJacobImg  from "./Assests/paulJacobImg.jpeg";
- import thanjaiDavidImg from "./Assests/thanjaiDavidImg.jpeg";
+import paulJacobImg    from "./Assests/paulJacobImg.jpeg";
+import thanjaiDavidImg from "./Assests/thanjaiDavidImg.jpeg";
 
 /* ── EMAILJS CONFIG ── */
 const EJS = {
@@ -133,38 +131,19 @@ const TIMELINE = [
   { year: "2024", icon: "🌟", title: "Cultural Educator",  desc: "Now actively teaching 17+ art forms, running workshops across schools, colleges and cultural institutions." },
 ];
 
-/* ══════════════════════════════════════════════════
-   MENTOR DATA — update photo field after import
-══════════════════════════════════════════════════ */
 const MENTORS_HOME = [
-  {
-    name:  "Paul Jacob",
-    role:  "Music Director",
-    emoji: "🎵",
-    photo: paulJacobImg,       
-  },
-  {
-    name:  "Thanjai David",
-    role:  "Parai Maestro",
-    emoji: "🥁",
-    photo: thanjaiDavidImg,         
-  },
+  { name: "Paul Jacob",    role: "Music Director", emoji: "🎵", photo: paulJacobImg },
+  { name: "Thanjai David", role: "Parai Maestro",  emoji: "🥁", photo: thanjaiDavidImg },
 ];
 
 const MENTORS_ABOUT = [
   {
-    name:  "Paul Jacob",
-    role:  "Music Director",
-    emoji: "🎵",
-    photo: paulJacobImg,        
-    desc:  "A celebrated Music Director who shaped Dhanush's understanding of classical structure and contemporary folk fusion.",
+    name: "Paul Jacob", role: "Music Director", emoji: "🎵", photo: paulJacobImg,
+    desc: "A celebrated Music Director who shaped Dhanush's understanding of classical structure and contemporary folk fusion.",
   },
   {
-    name:  "Thanjai David",
-    role:  "Parai Maestro",
-    emoji: "🥁",
-    photo: thanjaiDavidImg,        
-    desc:  "A living legend of the Parai tradition from Thanjavur — under whose guidance Dhanush mastered the sacred drum.",
+    name: "Thanjai David", role: "Parai Maestro", emoji: "🥁", photo: thanjaiDavidImg,
+    desc: "A living legend of the Parai tradition from Thanjavur — under whose guidance Dhanush mastered the sacred drum.",
   },
 ];
 
@@ -342,8 +321,8 @@ function BookingForm({ onSuccess }) {
   return (
     <form className="booking-form" onSubmit={handle}>
       {[
-        { k: "name",  l: "Your Name",         t: "text"  },
-        { k: "email", l: "Email Address",      t: "email" },
+        { k: "name",  l: "Your Name",    t: "text"  },
+        { k: "email", l: "Email Address", t: "email" },
       ].map(f => (
         <div key={f.k} className={`form-field ${filled[f.k] ? "filled" : ""}`}>
           <label>{f.l}</label>
@@ -389,7 +368,6 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
 
   return (
     <div className="ap-wrap">
-
       <nav className="ap-nav">
         <button className="ap-back-btn" onClick={onBack} onMouseEnter={H} onMouseLeave={L}>← Back</button>
         <div className="ap-nav-title">Dhanushkodi <em>Adhitiyan</em></div>
@@ -463,7 +441,7 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
         </div>
       </div>
 
-      {/* Mentors — ABOUT PAGE (larger card with description) */}
+      {/* Mentors */}
       <div className="ap-mentors">
         <div className="sec-label reveal">Guided By</div>
         <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>
@@ -472,16 +450,11 @@ function AboutPage({ onBack, H, L, magMove, magLeave }) {
         <div className="ap-mentors-grid">
           {MENTORS_ABOUT.map(m => (
             <div key={m.name} className="ap-mentor-card" onMouseEnter={H} onMouseLeave={L}>
-
-              {/* ── MENTOR PHOTO (68px circle) ── */}
               <div className="ap-mentor-avatar">
-                {m.photo ? (
-                  <img src={m.photo} alt={m.name} />
-                ) : (
-                  <span style={{ fontSize: "1.9rem" }}>{m.emoji}</span>
-                )}
+                {m.photo
+                  ? <img src={m.photo} alt={m.name} />
+                  : <span style={{ fontSize: "1.9rem" }}>{m.emoji}</span>}
               </div>
-
               <div>
                 <div className="ap-mentor-name">{m.name}</div>
                 <div className="ap-mentor-role">{m.role}</div>
@@ -575,6 +548,7 @@ export default function App() {
   useReveal(activeTab + "|" + page);
   useCounters(page);
 
+  /* Preloader */
   useEffect(() => {
     const dur = 2200, t0 = performance.now();
     const step = now => {
@@ -586,12 +560,14 @@ export default function App() {
     requestAnimationFrame(step);
   }, []);
 
+  /* Nav stuck */
   useEffect(() => {
     const fn = () => setNavStuck(window.scrollY > 60);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  /* Scroll ripple */
   useEffect(() => {
     let lastY = 0;
     const fn = () => {
@@ -608,8 +584,10 @@ export default function App() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  /* Parallax (desktop-only) */
   useEffect(() => {
     const fn = () => {
+      if (window.innerWidth <= 768) return;
       if (window.scrollY < window.innerHeight) {
         const n = document.querySelector(".hero-name");
         const q = document.querySelector(".hero-tagline");
@@ -621,6 +599,7 @@ export default function App() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  /* Gallery preview mouse tracker */
   useEffect(() => {
     const fn = e => {
       const pw = 200, ph = 270;
@@ -658,8 +637,8 @@ export default function App() {
   const goAbout    = () => { setPage("about"); window.scrollTo(0, 0); };
   const goHome     = () => { setPage("home"); setTimeout(() => window.scrollTo(0, 0), 50); };
 
-  const filtered    = filter === "all" ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.cat === filter);
-  const renumbered  = filtered.map((g, i) => ({ ...g, num: String(i + 1).padStart(2, "0") }));
+  const filtered   = filter === "all" ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.cat === filter);
+  const renumbered = filtered.map((g, i) => ({ ...g, num: String(i + 1).padStart(2, "0") }));
   const currentList = activeTab === "classes" ? CLASSES : SHOWS;
 
   return (
@@ -667,7 +646,7 @@ export default function App() {
       <div className="grain" />
       <canvas ref={canvasRef} className={`bg-canvas${canvasOn ? " visible" : ""}`} />
 
-      {/* Cursor */}
+      {/* Custom cursor */}
       <div className={`cursor-dot${hov ? " hov" : ""}`} style={{ transform: `translate(${dot.x}px,${dot.y}px)` }}>
         <div className="cursor-dot-inner" />
       </div>
@@ -710,12 +689,20 @@ export default function App() {
                 <li key={s}><a href={`#${s}`} onMouseEnter={H} onMouseLeave={L}>{s}</a></li>
               ))}
             </ul>
-            <button className="nav-ham" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+            <button
+              className="nav-ham"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+            >
               <span /><span /><span />
             </button>
-            <button className="nav-cta" onClick={openModal}
-              onMouseEnter={H} onMouseMove={e => magMove(e, e.currentTarget)}
-              onMouseLeave={e => { L(); magLeave(e.currentTarget); }}>
+            <button
+              className="nav-cta"
+              onClick={openModal}
+              onMouseEnter={H}
+              onMouseMove={e => magMove(e, e.currentTarget)}
+              onMouseLeave={e => { L(); magLeave(e.currentTarget); }}
+            >
               Book Now
             </button>
           </nav>
@@ -731,9 +718,24 @@ export default function App() {
             </button>
           </div>
 
-          {/* HERO */}
+          {/* ═══════════════════════════════════════════
+              HERO
+              Key structure:
+              .hero
+                .hero-bg          (top gradient vignette — keeps nav area dark)
+                .particles-wrap   (floating gold dots)
+                .hero-img-wrap    (full-bleed on mobile / right-side on desktop)
+                  .hero-img-frame
+                    .hero-img-inner
+                      img
+                    .hero-img-glow  (bottom-to-top dark gradient for text legibility)
+                    .hero-img-border (decorative clipped border — desktop only)
+                .hero-content     (eyebrow, name, degrees, roles, tagline, buttons)
+                .hero-scroll      (scroll indicator)
+          ════════════════════════════════════════════ */}
           <section id="hero" className="hero">
             <div className="hero-bg" />
+
             <div className="particles-wrap">
               {Array.from({ length: 14 }, (_, i) => (
                 <div key={i} className="particle" style={{
@@ -746,15 +748,29 @@ export default function App() {
                 }} />
               ))}
             </div>
+
+            {/*
+              .hero-img-wrap
+              Desktop: position absolute, right-side, 42% width, floating animation
+              Mobile:  position absolute, inset 0, full-bleed background
+              Both are handled purely by CSS — no inline style switching needed.
+            */}
             <div className="hero-img-wrap">
               <div className="hero-img-frame">
                 <div className="hero-img-inner">
                   <img src={dhanushImg} alt="Dhanushkodi Adhitiyan" />
+                  {/*
+                    .hero-img-glow
+                    Desktop: subtle radial glow at top of the portrait
+                    Mobile:  strong bottom-to-top dark gradient for text legibility
+                    Both handled by CSS media query — no JS or inline styles.
+                  */}
                   <div className="hero-img-glow" />
                 </div>
                 <div className="hero-img-border" />
               </div>
             </div>
+
             <div className="hero-content">
               <div className="hero-eyebrow">
                 <div className="hero-eyebrow-line" />
@@ -770,21 +786,31 @@ export default function App() {
                 <span className="hero-role-tag">Percussionist & Performer</span>
                 <span className="hero-role-tag">Parai Educator</span>
               </div>
-              <blockquote className="hero-tagline">"Rhythm is not music —<br />it is <em>life</em>"</blockquote>
+              <blockquote className="hero-tagline">
+                "Rhythm is not music —<br />it is <em>life</em>"
+              </blockquote>
               <div className="hero-btns">
-                <button className="btn btn-gold"
+                <button
+                  className="btn btn-gold"
                   onClick={() => document.getElementById("media").scrollIntoView({ behavior: "smooth" })}
-                  onMouseEnter={H} onMouseMove={e => magMove(e, e.currentTarget)}
-                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}>
+                  onMouseEnter={H}
+                  onMouseMove={e => magMove(e, e.currentTarget)}
+                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}
+                >
                   <span>▶ Watch Performance</span>
                 </button>
-                <button className="btn btn-ghost" onClick={openModal}
-                  onMouseEnter={H} onMouseMove={e => magMove(e, e.currentTarget)}
-                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}>
+                <button
+                  className="btn btn-ghost"
+                  onClick={openModal}
+                  onMouseEnter={H}
+                  onMouseMove={e => magMove(e, e.currentTarget)}
+                  onMouseLeave={e => { L(); magLeave(e.currentTarget); }}
+                >
                   Book a Show
                 </button>
               </div>
             </div>
+
             <div className="hero-scroll">
               <span className="hero-scroll-text">Scroll</span>
               <div className="hero-scroll-bar" />
@@ -809,15 +835,25 @@ export default function App() {
             </div>
             <div className="filter-row reveal" style={{ transitionDelay: "0.1s" }}>
               {[["all","All"],["international","International"],["festival","Festival"],["tv","TV / Film"],["concert","Concert"]].map(([k, l]) => (
-                <button key={k} className={`filter-btn${filter === k ? " active" : ""}`}
-                  onClick={() => setFilter(k)} onMouseEnter={H} onMouseLeave={L}>{l}</button>
+                <button
+                  key={k}
+                  className={`filter-btn${filter === k ? " active" : ""}`}
+                  onClick={() => setFilter(k)}
+                  onMouseEnter={H} onMouseLeave={L}
+                >
+                  {l}
+                </button>
               ))}
             </div>
             <div className="gallery-list">
               {renumbered.map((g, i) => (
-                <div key={g.title} className="gallery-item reveal" style={{ transitionDelay: `${i * 0.04}s` }}
+                <div
+                  key={g.title}
+                  className="gallery-item reveal"
+                  style={{ transitionDelay: `${i * 0.04}s` }}
                   onMouseEnter={() => { H(); setPreviewBg(GALLERY_PALETTES[i % GALLERY_PALETTES.length]); setPreviewOn(true); }}
-                  onMouseLeave={() => { L(); setPreviewOn(false); }}>
+                  onMouseLeave={() => { L(); setPreviewOn(false); }}
+                >
                   <div className="gi-num">{g.num}</div>
                   <div className="gi-title">{g.title}</div>
                   <div className="gi-meta">{g.meta}</div>
@@ -825,8 +861,10 @@ export default function App() {
                 </div>
               ))}
             </div>
-            <div className={`gallery-preview${previewOn ? " active" : ""}`}
-              style={{ left: previewPos.left, top: previewPos.top, background: previewBg }} />
+            <div
+              className={`gallery-preview${previewOn ? " active" : ""}`}
+              style={{ left: previewPos.left, top: previewPos.top, background: previewBg }}
+            />
           </section>
 
           {/* ABOUT */}
@@ -844,21 +882,15 @@ export default function App() {
                   culture to stages across the world, preserving art forms that speak beyond language.
                 </p>
 
-                {/* MENTOR CARDS — HOME */}
                 <div className="mentor-block reveal" style={{ transitionDelay: ".3s" }}>
                   <div className="mentor-label">Mentored & Guided By</div>
                   {MENTORS_HOME.map(m => (
                     <div key={m.name} className="mentor-card" onMouseEnter={H} onMouseLeave={L}>
-
-                      {/* ── MENTOR PHOTO (58px circle) ── */}
                       <div className="mentor-photo">
-                        {m.photo ? (
-                          <img src={m.photo} alt={m.name} />
-                        ) : (
-                          <span style={{ fontSize: "1.5rem" }}>{m.emoji}</span>
-                        )}
+                        {m.photo
+                          ? <img src={m.photo} alt={m.name} />
+                          : <span style={{ fontSize: "1.5rem" }}>{m.emoji}</span>}
                       </div>
-
                       <div>
                         <div className="mentor-name-text">{m.name}</div>
                         <div className="mentor-role-text">{m.role}</div>
@@ -867,8 +899,12 @@ export default function App() {
                   ))}
                 </div>
 
-                <button className="about-page-cta reveal" style={{ transitionDelay: ".4s" }}
-                  onClick={goAbout} onMouseEnter={H} onMouseLeave={L}>
+                <button
+                  className="about-page-cta reveal"
+                  style={{ transitionDelay: ".4s" }}
+                  onClick={goAbout}
+                  onMouseEnter={H} onMouseLeave={L}
+                >
                   <span>Read Full Story</span>
                   <span className="arrow">→</span>
                 </button>
@@ -883,7 +919,7 @@ export default function App() {
                     ))}
                   </div>
                 </div>
-                <div style={{ width: "100%", height: "1px", background: "var(--line)" }} className="reveal" />
+                <div style={{ width:"100%", height:"1px", background:"var(--line)" }} className="reveal" />
                 <div className="reveal" style={{ transitionDelay: ".3s" }}>
                   <div className="about-sub-label">By the Numbers</div>
                   {[
@@ -907,11 +943,16 @@ export default function App() {
             <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>Featured <em>Performances</em></h2>
             <p className="proj-hint reveal" style={{ transitionDelay: ".2s" }}>← Drag to explore →</p>
             <div className="proj-scroll-wrap">
-              <div className="proj-track" ref={projTrack}
-                onMouseDown={onDragStart} onMouseMove={onDragMove}
-                onMouseUp={onDragEnd} onMouseLeave={onDragEnd}
+              <div
+                className="proj-track"
+                ref={projTrack}
+                onMouseDown={onDragStart}
+                onMouseMove={onDragMove}
+                onMouseUp={onDragEnd}
+                onMouseLeave={onDragEnd}
                 onTouchStart={e => { tStart.current = e.touches[0].pageX; tScroll.current = projTrack.current.scrollLeft; }}
-                onTouchMove={e => { projTrack.current.scrollLeft = tScroll.current - (e.touches[0].pageX - tStart.current) * 1.1; }}>
+                onTouchMove={e => { projTrack.current.scrollLeft = tScroll.current - (e.touches[0].pageX - tStart.current) * 1.1; }}
+              >
                 {PROJECTS.map((p, i) => (
                   <div key={p.name} className="proj-card" onMouseEnter={H} onMouseLeave={L}>
                     <div className="proj-card-bg" style={{ background: p.bg }} />
@@ -961,18 +1002,29 @@ export default function App() {
             <div className="sec-label reveal">Repertoire</div>
             <h2 className="sec-title reveal" style={{ transitionDelay: ".1s" }}>Classes & <em>Shows</em></h2>
             <div className="toggle-wrap reveal" style={{ transitionDelay: ".2s" }}>
-              <div className="toggle-slider" style={{ width: "50%", transform: `translateX(${activeTab === "classes" ? "0%" : "100%"})` }} />
+              <div className="toggle-slider" style={{
+                width: "50%",
+                transform: `translateX(${activeTab === "classes" ? "0%" : "100%"})`,
+              }} />
               {["classes","shows"].map(t => (
-                <button key={t} className={`toggle-btn${activeTab === t ? " active" : ""}`}
-                  onClick={() => setActiveTab(t)} onMouseEnter={H} onMouseLeave={L}>
+                <button
+                  key={t}
+                  className={`toggle-btn${activeTab === t ? " active" : ""}`}
+                  onClick={() => setActiveTab(t)}
+                  onMouseEnter={H} onMouseLeave={L}
+                >
                   {t.charAt(0).toUpperCase() + t.slice(1)}
                 </button>
               ))}
             </div>
             <div className="svc-grid">
               {currentList.map((s, i) => (
-                <div key={`${activeTab}-${i}`} className="svc-cell" style={{ transitionDelay: `${(i % 4) * 0.07}s` }}
-                  onMouseEnter={H} onMouseLeave={L}>
+                <div
+                  key={`${activeTab}-${i}`}
+                  className="svc-cell"
+                  style={{ transitionDelay: `${(i % 4) * 0.07}s` }}
+                  onMouseEnter={H} onMouseLeave={L}
+                >
                   <div className="svc-cell-num">{String(i + 1).padStart(2, "0")}</div>
                   <div className="svc-icon">{s.icon}</div>
                   <div className="svc-name">{s.name}</div>
@@ -995,7 +1047,9 @@ export default function App() {
                       <span>{m.emoji}</span>
                       <span className="media-placeholder-label">{m.label}</span>
                     </div>
-                    <div className="media-hover-overlay"><div className="media-play">▶</div></div>
+                    <div className="media-hover-overlay">
+                      <div className="media-play">▶</div>
+                    </div>
                   </div>
                   <div className="media-caption">{m.label}</div>
                 </div>
@@ -1033,8 +1087,13 @@ export default function App() {
                     <div className="success-tamil" style={{ marginTop: "1.5rem" }}>
                       பறை – கலையும் · கல்வியும்
                     </div>
-                    <button className="btn btn-ghost" style={{ marginTop: "1.5rem", cursor: "pointer" }}
-                      onClick={() => setContactDone(false)}>Send Another</button>
+                    <button
+                      className="btn btn-ghost"
+                      style={{ marginTop: "1.5rem", cursor: "pointer" }}
+                      onClick={() => setContactDone(false)}
+                    >
+                      Send Another
+                    </button>
                   </div>
                 )}
               </div>
@@ -1057,8 +1116,14 @@ export default function App() {
                   <div key={g.title} className="footer-link-group">
                     <div className="footer-link-group-title">{g.title}</div>
                     {g.links.map(([href, label]) => (
-                      <a key={label} href={`#${href.replace("#","")}`} className="footer-link"
-                        onMouseEnter={H} onMouseLeave={L}>{label}</a>
+                      <a
+                        key={label}
+                        href={`#${href.replace("#","")}`}
+                        className="footer-link"
+                        onMouseEnter={H} onMouseLeave={L}
+                      >
+                        {label}
+                      </a>
                     ))}
                   </div>
                 ))}
@@ -1068,8 +1133,14 @@ export default function App() {
               <span className="footer-copy">© 2026 Gopika.krishnaa — All rights reserved.</span>
               <div className="footer-wave">
                 {Array.from({ length: 10 }, (_, i) => (
-                  <div key={i} className="footer-wave-bar"
-                    style={{ animationDelay: `${i * 0.1}s`, height: `${4 + Math.abs(Math.sin(i)) * 6}px` }} />
+                  <div
+                    key={i}
+                    className="footer-wave-bar"
+                    style={{
+                      animationDelay: `${i * 0.1}s`,
+                      height: `${4 + Math.abs(Math.sin(i)) * 6}px`,
+                    }}
+                  />
                 ))}
               </div>
               <span className="footer-tamil">கலையும் ★ கல்வியும்</span>
@@ -1078,7 +1149,10 @@ export default function App() {
 
           {/* MODAL */}
           {modalOpen && (
-            <div className="modal-bg" onClick={e => { if (e.target.classList.contains("modal-bg")) closeModal(); }}>
+            <div
+              className="modal-bg"
+              onClick={e => { if (e.target.classList.contains("modal-bg")) closeModal(); }}
+            >
               <div className="modal-box">
                 <button className="modal-close-btn" onClick={closeModal} onMouseEnter={H} onMouseLeave={L}>✕</button>
                 {!modalDone ? (
@@ -1095,8 +1169,14 @@ export default function App() {
                       Thank you — Dhanush's team will contact you within 24 hours.
                     </p>
                     <div className="success-tamil">பறை – கலையும் · கல்வியும்</div>
-                    <button className="btn btn-ghost" style={{ marginTop: "1.5rem", cursor: "pointer" }}
-                      onClick={closeModal} onMouseEnter={H} onMouseLeave={L}>Close</button>
+                    <button
+                      className="btn btn-ghost"
+                      style={{ marginTop: "1.5rem", cursor: "pointer" }}
+                      onClick={closeModal}
+                      onMouseEnter={H} onMouseLeave={L}
+                    >
+                      Close
+                    </button>
                   </div>
                 )}
               </div>
